@@ -90,6 +90,9 @@ public class InfoCarListFragment extends ListFragment {
                 android.R.id.text1,
                 DummyContent.ITEMS));
         */
+
+        list = DummyData.populate();
+
         if (savedInstanceState != null) {
             list = (ArrayList<CarInfo>) savedInstanceState.getSerializable("myList");
 
@@ -100,7 +103,6 @@ public class InfoCarListFragment extends ListFragment {
             ));
 
         } else {
-            list = DummyData.populate();
             setListAdapter(new CarListAdapter(
                     getActivity(),
                     android.R.layout.two_line_list_item,

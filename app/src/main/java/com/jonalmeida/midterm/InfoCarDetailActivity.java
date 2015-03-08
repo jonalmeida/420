@@ -68,4 +68,5 @@ public class InfoCarDetailActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

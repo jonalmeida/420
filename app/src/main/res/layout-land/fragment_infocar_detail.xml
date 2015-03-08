@@ -18,8 +18,11 @@
         android:layout_height="200dp"
         android:id="@+id/imageView"
         android:src="@drawable/placeholder_thumbnail"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/infocar_detail"
+        android:layout_toStartOf="@+id/dealer_button"
+        android:layout_marginTop="36dp"
+        android:layout_above="@+id/dealer_button"
+        android:scaleType="fitStart"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -51,10 +54,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Dealer Contact: "
         android:id="@+id/dealer_contact_text"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_toEndOf="@+id/imageView"
         android:paddingStart="10dp"
-        android:paddingEnd="5dp"
-        android:layout_below="@+id/imageView"
-        android:layout_alignStart="@+id/view_more_button" />
+        android:paddingEnd="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
