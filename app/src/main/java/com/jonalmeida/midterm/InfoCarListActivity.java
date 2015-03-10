@@ -80,4 +80,27 @@ public class InfoCarListActivity extends FragmentActivity
             startActivity(detailIntent);
         }
     }
+
+    @Override
+    public void onIndexItemSelected(int index) {
+        if (mTwoPane) {
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            Bundle arguments = new Bundle();
+            arguments.putInt(InfoCarDetailFragment.ARG_ITEM_ID, index);
+            InfoCarDetailFragment fragment = new InfoCarDetailFragment();
+            fragment.setArguments(arguments);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.infocar_detail_container, fragment)
+                    .commit();
+
+        } else {
+            // In single-pane mode, simply start the detail activity
+            // for the selected item ID.
+            Intent detailIntent = new Intent(this, InfoCarDetailActivity.class);
+            detailIntent.putExtra(InfoCarDetailFragment.ARG_ITEM_ID, index);
+            startActivity(detailIntent);
+        }
+    }
 }

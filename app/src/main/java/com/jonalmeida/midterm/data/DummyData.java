@@ -10,14 +10,9 @@ public class DummyData {
 
     public static ArrayList<CarInfo> DATA = new ArrayList<>();
 
-    public DummyData() {
-        populate();
-    }
-
-    public static ArrayList<CarInfo> populate() {
+    static {
         DATA.add(new CarInfo("Ferrari", "0 - 60 MPH in 2.5s", "idk"));
         DATA.add(new CarInfo("Audi", "0 - 60 MPH in 2.0s", "R8"));
         DATA.add(new CarInfo("Ford", "0 - 60 MPH in 3.2s", "Edge"));
-        return DATA;
     }
 }

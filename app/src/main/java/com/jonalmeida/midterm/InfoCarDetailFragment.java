@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.jonalmeida.midterm.dummy.DummyContent;
+import com.jonalmeida.midterm.data.DummyData;
 
 /**
  * A fragment representing a single InfoCar detail screen.
@@ -29,7 +29,7 @@ public class InfoCarDetailFragment extends Fragment implements InfoCarDetailActi
     /**
      * The dummy content this fragment is presenting.
      */
-    private DummyContent.DummyItem mItem;
+    private CarInfo mItem;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -49,7 +49,7 @@ public class InfoCarDetailFragment extends Fragment implements InfoCarDetailActi
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            mItem = DummyData.DATA.get(getArguments().getInt(ARG_ITEM_ID));
         }
 
     }
@@ -61,7 +61,7 @@ public class InfoCarDetailFragment extends Fragment implements InfoCarDetailActi
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.infocar_detail)).setText(mItem.content);
+            ((TextView) rootView.findViewById(R.id.infocar_detail)).setText(mItem.getModel());
         }
 
         return rootView;

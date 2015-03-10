@@ -56,8 +56,8 @@ public class InfoCarDetailActivity extends ActionBarActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(InfoCarDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(InfoCarDetailFragment.ARG_ITEM_ID));
+            arguments.putInt(InfoCarDetailFragment.ARG_ITEM_ID,
+                    getIntent().getIntExtra(InfoCarDetailFragment.ARG_ITEM_ID, -1));
             InfoCarDetailFragment fragment = new InfoCarDetailFragment();
             fragment.setArguments(arguments);
             mListener = fragment;

@@ -4,16 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
 import com.jonalmeida.midterm.data.DummyData;
-import com.jonalmeida.midterm.dummy.DummyContent;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A list fragment representing a list of InfoCars. This fragment
@@ -59,6 +55,7 @@ public class InfoCarListFragment extends ListFragment {
          * Callback for when an item has been selected.
          */
         public void onItemSelected(String id);
+        public void onIndexItemSelected(int index);
     }
 
     /**
@@ -68,6 +65,10 @@ public class InfoCarListFragment extends ListFragment {
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
         public void onItemSelected(String id) {
+        }
+
+        @Override
+        public void onIndexItemSelected(int index) {
         }
     };
 
@@ -91,7 +92,7 @@ public class InfoCarListFragment extends ListFragment {
                 DummyContent.ITEMS));
         */
 
-        list = DummyData.populate();
+        list = DummyData.DATA;
 
         if (savedInstanceState != null) {
             list = (ArrayList<CarInfo>) savedInstanceState.getSerializable("myList");
@@ -147,7 +148,8 @@ public class InfoCarListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+//        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        mCallbacks.onIndexItemSelected(position);
     }
 
     @Override
