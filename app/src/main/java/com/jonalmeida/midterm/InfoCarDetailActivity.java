@@ -6,6 +6,12 @@ import android.support.v7.app.ActionBarActivity;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -20,6 +26,8 @@ import android.view.MenuItem;
 public class InfoCarDetailActivity extends ActionBarActivity {
 
     private static final String TAG = InfoCarDetailActivity.class.toString();
+
+    private OnFragmentCallDealerListener mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,9 @@ public class InfoCarDetailActivity extends ActionBarActivity {
         //
         // http://developer.android.com/guide/components/fragments.html
         //
+
+        // TODO: Get the listView from this bundle to avoid duplication
+
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
@@ -46,6 +57,7 @@ public class InfoCarDetailActivity extends ActionBarActivity {
                     getIntent().getStringExtra(InfoCarDetailFragment.ARG_ITEM_ID));
             InfoCarDetailFragment fragment = new InfoCarDetailFragment();
             fragment.setArguments(arguments);
+            mListener = fragment;
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.infocar_detail_container, fragment)
                     .commit();
@@ -67,6 +79,35 @@ public class InfoCarDetailActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void viewButtonClicked(View view) {
+        navigateUpTo(new Intent(this, InfoCarListActivity.class));
+    }
+
+    public void exitButtonClicked(View view) {
+        // TODO: Exit application
+        Log.v(TAG, "Exiting..");
+    }
+
+    public void callDealerButtonClicked(View view) {
+        /*
+        TextView callText = (TextView) view.findViewById(R.id.textView_dealer_contact);
+        if (callText != null) {
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(getApplicationContext(), callText.getText(), duration);
+            toast.show();
+        } else {
+            Log.v(TAG, "Couldn't find dealer's contact information.");
+        }
+        */
+        if (mListener != null) {
+            mListener.callDealer();
+        }
+    }
+
+    public interface OnFragmentCallDealerListener {
+        public void callDealer();
     }
 
 }

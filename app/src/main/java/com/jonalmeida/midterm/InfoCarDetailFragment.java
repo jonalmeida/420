@@ -2,10 +2,12 @@ package com.jonalmeida.midterm;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.jonalmeida.midterm.dummy.DummyContent;
@@ -16,7 +18,8 @@ import com.jonalmeida.midterm.dummy.DummyContent;
  * in two-pane mode (on tablets) or a {@link InfoCarDetailActivity}
  * on handsets.
  */
-public class InfoCarDetailFragment extends Fragment {
+public class InfoCarDetailFragment extends Fragment implements InfoCarDetailActivity.OnFragmentCallDealerListener {
+    private static final String TAG = InfoCarDetailFragment.class.toString();
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -32,6 +35,9 @@ public class InfoCarDetailFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
+
+    private View rootView;
+
     public InfoCarDetailFragment() {
     }
 
@@ -45,12 +51,13 @@ public class InfoCarDetailFragment extends Fragment {
             // to load content from a content provider.
             mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_infocar_detail, container, false);
+        rootView = inflater.inflate(R.layout.fragment_infocar_detail, container, false);
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
@@ -58,5 +65,17 @@ public class InfoCarDetailFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    @Override
+    public void callDealer() {
+        TextView callText = (TextView) rootView.findViewById(R.id.textView_dealer_contact);
+        if (callText != null) {
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(getActivity(), callText.getText(), duration);
+            toast.show();
+        } else {
+            Log.v(TAG, "Couldn't find dealer's contact information.");
+        }
     }
 }

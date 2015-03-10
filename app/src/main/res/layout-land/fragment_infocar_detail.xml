@@ -27,8 +27,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Car Dealer"
+        android:text="Call Dealer"
         android:id="@+id/dealer_button"
+        android:onClick="callDealerButtonClicked"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:text="Exit"
         android:id="@+id/exit_button"
+        android:onClick="exitButtonClicked"
         android:layout_alignBottom="@+id/dealer_button"
         android:layout_toEndOf="@+id/dealer_button" />
 
@@ -45,6 +47,7 @@
         android:layout_height="wrap_content"
         android:text="View More"
         android:id="@+id/view_more_button"
+        android:onClick="viewButtonClicked"
         android:layout_alignBottom="@+id/infocar_detail"
         android:layout_toStartOf="@+id/dealer_button" />
 

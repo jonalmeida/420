@@ -2,9 +2,6 @@ package com.jonalmeida.midterm;
 
 import java.io.Serializable;
 
-/**
- * Created by jonathan on 05/03/15.
- */
 public class CarInfo implements Serializable {
     private String name, speed, model;
 
