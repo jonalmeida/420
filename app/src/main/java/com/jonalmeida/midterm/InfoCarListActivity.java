@@ -49,6 +49,8 @@ public class InfoCarListActivity extends FragmentActivity
                     .setActivateOnItemClick(true);
         }
 
+        ActivityTracker.getInstance().ourActivityStack.add(this);
+
         // TODO: If exposing deep links into your app, handle intents here.
     }
 

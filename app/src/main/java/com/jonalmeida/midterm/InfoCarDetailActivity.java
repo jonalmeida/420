@@ -1,5 +1,7 @@
 package com.jonalmeida.midterm;
 
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -7,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.os.Process;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +65,9 @@ public class InfoCarDetailActivity extends ActionBarActivity {
                     .add(R.id.infocar_detail_container, fragment)
                     .commit();
         }
+
+        ActivityTracker.getInstance().ourActivityStack.add(this);
+
     }
 
     @Override
@@ -86,21 +92,13 @@ public class InfoCarDetailActivity extends ActionBarActivity {
     }
 
     public void exitButtonClicked(View view) {
-        // TODO: Exit application
         Log.v(TAG, "Exiting..");
+        for (Activity e : ActivityTracker.getInstance().ourActivityStack) {
+            e.finish();
+        }
     }
 
     public void callDealerButtonClicked(View view) {
-        /*
-        TextView callText = (TextView) view.findViewById(R.id.textView_dealer_contact);
-        if (callText != null) {
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(getApplicationContext(), callText.getText(), duration);
-            toast.show();
-        } else {
-            Log.v(TAG, "Couldn't find dealer's contact information.");
-        }
-        */
         if (mListener != null) {
             mListener.callDealer();
         }
