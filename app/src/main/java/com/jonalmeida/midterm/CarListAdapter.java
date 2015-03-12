@@ -45,7 +45,14 @@ public class CarListAdapter extends ArrayAdapter<CarInfo> {
         View listItemView = inflater.inflate(R.layout.car_list_item, parent, false);
 
         ImageView thumbnail = (ImageView) listItemView.findViewById(R.id.thumbnail);
-        thumbnail.setImageResource(R.drawable.placeholder_thumbnail);
+
+        int possibleThumbnail = parent.getResources()
+                .getIdentifier("thumbnail_" + position, "drawable", context.getPackageName());
+        if (possibleThumbnail == 0) {
+            thumbnail.setImageResource(R.drawable.placeholder_thumbnail);
+        } else {
+            thumbnail.setImageResource(possibleThumbnail);
+        }
 
         CarInfo carInfo = dataList.get(position);
 

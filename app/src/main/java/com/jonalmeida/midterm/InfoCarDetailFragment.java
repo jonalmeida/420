@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,8 @@ public class InfoCarDetailFragment extends Fragment implements InfoCarDetailActi
      */
 
     private View rootView;
+
+    private ImageView imageView;
 
     public InfoCarDetailFragment() {
     }
@@ -74,10 +77,20 @@ public class InfoCarDetailFragment extends Fragment implements InfoCarDetailActi
                     .setText(mItem.getLeaseRate());
         }
 
-        // Check for image and set it here.
-        //((TextView) rootView.findViewById(R.id.textView_finance_rate)).setText(mItem.getFinanceRate());
+        // Check for image and set it here, otherwise the placeholder image shows up
+        imageView = (ImageView) rootView.findViewById(R.id.imageView);
+        imageView.setImageResource(getResources()
+                .getIdentifier("full_" + imageIndex, "drawable", getActivity().getPackageName()));
+        //imageView.setImageDrawable(getResources().getDrawable(R.drawable.placeholder_thumbnail));
 
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        imageView.setImageDrawable(null);
     }
 
     @Override
