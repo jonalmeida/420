@@ -5,14 +5,6 @@
     android:background="@drawable/list_row_selector"
     android:padding="8dp" >
 
-    <TextView
-        android:id="@+id/infocar_detail"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:textIsSelectable="true" />
-
     <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -45,7 +37,7 @@
         android:text="View More"
         android:id="@+id/view_more_button"
         android:onClick="viewButtonClicked"
-        android:layout_alignBottom="@+id/infocar_detail"
+        android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/dealer_button" />
 
     <TextView

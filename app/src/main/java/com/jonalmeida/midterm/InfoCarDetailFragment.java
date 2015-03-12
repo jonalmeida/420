@@ -30,6 +30,7 @@ public class InfoCarDetailFragment extends Fragment implements InfoCarDetailActi
      * The dummy content this fragment is presenting.
      */
     private CarInfo mItem;
+    private int imageIndex;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -49,7 +50,9 @@ public class InfoCarDetailFragment extends Fragment implements InfoCarDetailActi
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = DummyData.DATA.get(getArguments().getInt(ARG_ITEM_ID));
+            imageIndex = getArguments().getInt(ARG_ITEM_ID);
+            // `imageIndex` can also be used to retrieve the mItem.
+            mItem = DummyData.DATA.get(imageIndex);
         }
 
     }
@@ -61,8 +64,18 @@ public class InfoCarDetailFragment extends Fragment implements InfoCarDetailActi
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.infocar_detail)).setText(mItem.getModel());
+            ((TextView) rootView.findViewById(R.id.textView_dealer_contact))
+                    .setText(mItem.getDealerContact());
+            ((TextView) rootView.findViewById(R.id.textView_finance_rate))
+                    .setText(mItem.getFinanceRate());
+            ((TextView) rootView.findViewById(R.id.textView_price))
+                    .setText(mItem.getPrice());
+            ((TextView) rootView.findViewById(R.id.textView_lease_rate))
+                    .setText(mItem.getLeaseRate());
         }
+
+        // Check for image and set it here.
+        //((TextView) rootView.findViewById(R.id.textView_finance_rate)).setText(mItem.getFinanceRate());
 
         return rootView;
     }

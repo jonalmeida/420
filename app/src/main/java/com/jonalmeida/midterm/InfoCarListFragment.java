@@ -6,7 +6,6 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-
 import com.jonalmeida.midterm.data.DummyData;
 
 import java.util.ArrayList;

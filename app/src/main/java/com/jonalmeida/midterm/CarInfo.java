@@ -6,14 +6,9 @@ public class CarInfo implements Serializable {
     private String name, speed, model;
     private String dealerContact, price, financeRate, leaseRate;
 
-    public CarInfo(String name, String speed, String model) {
-        this.name = name;
-        this.speed = speed;
-        this.model = model;
-    }
-
     public CarInfo(String name, String speed, String model,
-                   String dealerContact, String price, String financeRate, String leaseRate) {
+                   String dealerContact, String price,
+                   String financeRate, String leaseRate) {
         this.name = name;
         this.speed = speed;
         this.model = model;
@@ -35,4 +30,19 @@ public class CarInfo implements Serializable {
         return model;
     }
 
+    public String getDealerContact() {
+        return dealerContact;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public String getFinanceRate() {
+        return financeRate;
+    }
+
+    public String getLeaseRate() {
+        return leaseRate;
+    }
 }
