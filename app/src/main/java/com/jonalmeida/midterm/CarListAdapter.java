@@ -1,6 +1,8 @@
 package com.jonalmeida.midterm;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -51,8 +54,12 @@ public class CarListAdapter extends ArrayAdapter<CarInfo> {
         if (possibleThumbnail == 0) {
             thumbnail.setImageResource(R.drawable.placeholder_thumbnail);
         } else {
-            thumbnail.setImageResource(possibleThumbnail);
+            //thumbnail.setImageResource(possibleThumbnail);
+            thumbnail.setImageDrawable(parent.getResources().getDrawable(possibleThumbnail));
         }
+
+        //thumbnail.setImageResource(R.drawable.placeholder_thumbnail);
+        //new SetImageTask(position, thumbnail, parent);
 
         CarInfo carInfo = dataList.get(position);
 

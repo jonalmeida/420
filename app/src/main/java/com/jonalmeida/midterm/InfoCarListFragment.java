@@ -99,6 +99,7 @@ public class InfoCarListFragment extends ListFragment {
                     android.R.layout.two_line_list_item,
                     list));
         }
+
     }
 
     @Override

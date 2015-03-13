@@ -79,9 +79,11 @@ public class InfoCarDetailFragment extends Fragment implements InfoCarDetailActi
 
         // Check for image and set it here, otherwise the placeholder image shows up
         imageView = (ImageView) rootView.findViewById(R.id.imageView);
-        imageView.setImageResource(getResources()
-                .getIdentifier("full_" + imageIndex, "drawable", getActivity().getPackageName()));
-        //imageView.setImageDrawable(getResources().getDrawable(R.drawable.placeholder_thumbnail));
+        //imageView.setImageResource(getResources()
+        //        .getIdentifier("full_" + imageIndex, "drawable", getActivity().getPackageName()));
+        imageView.setImageDrawable(getResources().getDrawable(
+                getResources().getIdentifier("full_" + imageIndex, "drawable", getActivity().getPackageName())
+        ));
 
         return rootView;
     }
