@@ -1,0 +1,9 @@
+For my project, I want to create a simple text application that will allow you to communicate with people via SMS. The application will use the built-in SMS Provider in Android to pull it all your contacts that you've had a conversation with, and list them. Clicking any one of the contact's names would open a recent history thread of the conversation you were having with that user. The application will also allow you to send messages to that contact.
+
+You would also be able to start new conversation thread with contacts that you do not have a conversation history with.
+
+There will be a basic Settings option to change minor aspects of the application, e.g. color of top bar, etc.
+
+There are two "nice-to-have features" that would like to implement **only** if time permits:
+ - When a message is received and the application not active or the phone screen is off, the LED on the phone would flash, a simple notification item would be added to the Notification drawer and the phone should vibrate only when the SMS is first received.
+ - I'd like to add an additional feature where the application would have a service part which would show you a dialog/widget when a new SMS is received along with a text field that you let you reply back to that text message.
