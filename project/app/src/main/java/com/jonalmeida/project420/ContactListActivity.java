@@ -80,6 +80,7 @@ public class ContactListActivity extends ActionBarActivity
             Intent detailIntent = new Intent(this, ContactDetailActivity.class);
             detailIntent.putExtra(ContactDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
+            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
         }
     }
 }

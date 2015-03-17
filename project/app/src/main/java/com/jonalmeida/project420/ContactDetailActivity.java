@@ -47,7 +47,6 @@ public class ContactDetailActivity extends ActionBarActivity {
                     .add(R.id.contact_detail_container, fragment)
                     .commit();
         }
-        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     @Override
@@ -64,5 +63,11 @@ public class ContactDetailActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
     }
 }
