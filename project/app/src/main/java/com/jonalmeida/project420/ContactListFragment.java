@@ -1,10 +1,12 @@
 package com.jonalmeida.project420;
 
 import android.app.Activity;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
@@ -87,6 +89,24 @@ public class ContactListFragment extends ListFragment {
                 R.layout.contact_list_item,
                 dummyContactData
         ));
+
+        // Sample code to retrieve SMS inbox
+        /*
+        Cursor cursor = getActivity().getContentResolver().query(Uri.parse("content://sms/inbox"), null, null, null, null);
+        if (cursor.moveToFirst()) { // must check the result to prevent exception
+            do {
+                String msgData = "";
+                for(int idx=0;idx<cursor.getColumnCount();idx++)
+                {
+                    msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
+                }
+                // use msgData
+                Log.v("ProjectSMS", msgData);
+            } while (cursor.moveToNext());
+        } else {
+            // empty box, no SMS
+        }
+        */
     }
 
     @Override
