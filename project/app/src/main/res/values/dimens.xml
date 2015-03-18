@@ -6,4 +6,7 @@
     <dimen name="rating">15dip</dimen>
     <dimen name="genre">13dip</dimen>
     <dimen name="year">12dip</dimen>
+
+    <dimen name="icon">80dp</dimen>
+    <dimen name="icon_mask">55dp</dimen>
 </resources>

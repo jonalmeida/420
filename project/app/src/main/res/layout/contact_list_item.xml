@@ -5,13 +5,45 @@
     android:background="@drawable/list_row_selector"
     android:padding="8dp" >
 
-    <!-- Thumbnail Image -->
-    <ImageView
-        android:id="@+id/thumbnail"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+    <RelativeLayout
+
+        android:id="@+id/icon_layout"
+        android:layout_width="@dimen/icon_mask"
+        android:layout_height="@dimen/icon_mask"
         android:layout_alignParentLeft="true"
-        android:layout_marginRight="8dp" />
+        android:layout_alignParentTop="true" >
+
+        <!-- Thumbnail Image -->
+        <!--<ImageView-->
+            <!--android:id="@+id/thumbnail"-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="80dp"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:scaleType="fitXY" >-->
+        <!--</ImageView>-->
+
+        <!-- Original ImageView -->
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="@dimen/icon"
+            android:layout_height="@dimen/icon"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY" >
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/icon_mask"
+            android:layout_width="@dimen/icon_mask"
+            android:layout_height="@dimen/icon_mask"
+            android:layout_centerInParent="true"
+            android:background="@drawable/circle"
+            android:scaleType="fitXY" >
+        </ImageView>
+    </RelativeLayout>
+
+
 
     <!-- Movie Title -->
     <TextView
