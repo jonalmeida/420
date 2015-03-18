@@ -2,11 +2,10 @@
 <resources>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="title">17dp</dimen>
-    <dimen name="rating">15dip</dimen>
-    <dimen name="genre">13dip</dimen>
-    <dimen name="year">12dip</dimen>
+    <dimen name="name">17dp</dimen>
+    <dimen name="last_message">15dip</dimen>
 
-    <dimen name="icon">80dp</dimen>
+    <dimen name="icon_dimen">45dp</dimen>
+    <dimen name="icon">36dp</dimen>
     <dimen name="icon_mask">55dp</dimen>
 </resources>

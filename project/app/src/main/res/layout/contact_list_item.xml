@@ -6,30 +6,20 @@
     android:padding="8dp" >
 
     <RelativeLayout
-
-        android:id="@+id/icon_layout"
+        android:id="@+id/layout_circle_mask"
         android:layout_width="@dimen/icon_mask"
         android:layout_height="@dimen/icon_mask"
+        android:layout_marginRight="8dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" >
 
-        <!-- Thumbnail Image -->
-        <!--<ImageView-->
-            <!--android:id="@+id/thumbnail"-->
-            <!--android:layout_width="80dp"-->
-            <!--android:layout_height="80dp"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:layout_marginRight="8dp"-->
-            <!--android:scaleType="fitXY" >-->
-        <!--</ImageView>-->
-
         <!-- Original ImageView -->
         <ImageView
-            android:id="@+id/icon"
+            android:id="@+id/contact_image"
             android:layout_width="@dimen/icon"
             android:layout_height="@dimen/icon"
             android:layout_centerInParent="true"
+            android:src="@drawable/default_icon"
             android:scaleType="fitXY" >
         </ImageView>
 
@@ -41,48 +31,41 @@
             android:background="@drawable/circle"
             android:scaleType="fitXY" >
         </ImageView>
+
     </RelativeLayout>
 
-
+    <!-- Thumbnail Image -->
+    <!--<ImageView-->
+        <!--android:id="@+id/thumbnail"-->
+        <!--android:layout_width="@dimen/icon_dimen"-->
+        <!--android:layout_height="@dimen/icon_dimen"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:src="@drawable/default_icon"-->
+        <!--android:scaleType="fitXY" >-->
+    <!--</ImageView>-->
 
     <!-- Movie Title -->
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/thumbnail"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:textSize="@dimen/title"
+        android:layout_alignTop="@+id/layout_circle_mask"
+        android:layout_toRightOf="@+id/layout_circle_mask"
+        android:textSize="@dimen/name"
+        android:text="Jonathan Almeida"
         android:textStyle="bold" />
 
     <!-- Rating -->
     <TextView
-        android:id="@+id/details"
+        android:id="@+id/last_message"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
+        android:layout_below="@id/contact_name"
         android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:textSize="@dimen/rating" />
-
-    <!-- Genre -->
-    <TextView
-        android:id="@+id/model"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/details"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:textColor="@color/genre"
-        android:textSize="@dimen/genre" />
-
-    <!-- Arrow icon for the ListView (disabled because it looks ugly -->
-    <!--<ImageView-->
-        <!--android:id="@+id/arrow"-->
-        <!--android:layout_width="50dp"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:src="@drawable/arrow"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginRight="8dp" />-->
+        android:layout_toRightOf="@+id/layout_circle_mask"
+        android:text="Last message I sent to you that you can see w.."
+        android:textSize="@dimen/last_message" />
 
 </RelativeLayout>
