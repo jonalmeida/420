@@ -3,4 +3,26 @@
     android:name="com.jonalmeida.project420.ContactListFragment" android:layout_width="match_parent"
     android:layout_height="match_parent" android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp" tools:context=".ContactListActivity"
-    tools:layout="@android:layout/list_content" />
+    tools:layout="@android:layout/list_content" >
+
+    <com.jonalmeida.project420.FloatingActionButton
+            android:id="@+id/fab_1"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="@dimen/fab_elevation"
+            android:background="@drawable/fab_background"
+            android:stateListAnimator="@animator/fab_anim"
+            android:layout_gravity="bottom|end" >
+
+            <ImageView
+                android:layout_width="@dimen/fab_icon_size"
+                android:layout_height="@dimen/fab_icon_size"
+                android:src="@drawable/fab_icons"
+                android:layout_gravity="center"
+                android:duplicateParentState="true"/>
+
+    </com.jonalmeida.project420.FloatingActionButton>
+
+</fragment>
