@@ -10,6 +10,9 @@ import android.widget.ListView;
 
 import com.jonalmeida.project420.dummy.DummyContent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A list fragment representing a list of Contacts. This fragment
  * also supports tablet devices by allowing list items to be given an
@@ -37,6 +40,11 @@ public class ContactListFragment extends ListFragment {
      * The current activated item position. Only used on tablets.
      */
     private int mActivatedPosition = ListView.INVALID_POSITION;
+
+    /**
+     * Dummy Contact list data.
+     */
+    private ArrayList<ContactItem> dummyContactData = new ArrayList<>();
 
     /**
      * A callback interface that all activities containing this fragment must
@@ -71,12 +79,21 @@ public class ContactListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        dummyContactData.add(new ContactItem("Jonathan Almeida", "last message.."));
+        dummyContactData.add(new ContactItem("Joella Almeida", "Another last message.."));
+
         // TODO: replace with a real list adapter.
         setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
                 DummyContent.ITEMS));
+
+        setListAdapter(new ContactListAdapter(
+                getActivity(),
+                R.layout.contact_list_item,
+                dummyContactData
+        ));
     }
 
     @Override

@@ -7,13 +7,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 public class ContactListAdapter extends ArrayAdapter<ContactItem> {
 
     private Context context;
     private int listItemResId;
 
-    public ContactListAdapter(Context context, int resource, Object[] objects) {
-        super(context, resource, (ContactItem[]) objects);
+    public ContactListAdapter(Context context, int resource, ArrayList<ContactItem> objects) {
+        super(context, resource, objects);
         this.context = context;
         this.listItemResId = resource;
     }
@@ -27,8 +29,8 @@ public class ContactListAdapter extends ArrayAdapter<ContactItem> {
 
         ContactItem contact = getItem(position);
 
-        ImageView image = (ImageView) view.findViewById(R.id.contact_image);
-        image.setImageResource(R.drawable.default_icon);
+//        ImageView image = (ImageView) view.findViewById(R.id.contact_image);
+//        image.setImageResource(R.drawable.default_icon);
 
         return listItemView;
     }
