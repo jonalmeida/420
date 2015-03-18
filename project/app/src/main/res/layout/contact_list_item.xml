@@ -1,52 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/list_row_selector"
     android:padding="8dp" >
 
-    <RelativeLayout
-        android:id="@+id/layout_circle_mask"
-        android:layout_width="@dimen/icon_mask"
-        android:layout_height="@dimen/icon_mask"
-        android:layout_marginRight="8dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/layout_circle_mask"-->
+        <!--android:layout_width="@dimen/icon_mask"-->
+        <!--android:layout_height="@dimen/icon_mask"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentTop="true" >-->
 
-        <!-- Original ImageView -->
-        <ImageView
-            android:id="@+id/contact_image"
-            android:layout_width="@dimen/icon"
-            android:layout_height="@dimen/icon"
-            android:layout_centerInParent="true"
-            android:src="@drawable/default_icon"
-            android:scaleType="fitXY" >
-        </ImageView>
+        <!--&lt;!&ndash; Original ImageView &ndash;&gt;-->
+        <!--<ImageView-->
+            <!--android:id="@+id/contact_image"-->
+            <!--android:layout_width="@dimen/icon"-->
+            <!--android:layout_height="@dimen/icon"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:src="@drawable/default_icon"-->
+            <!--android:scaleType="fitXY" >-->
+        <!--</ImageView>-->
 
-        <ImageView
-            android:id="@+id/icon_mask"
-            android:layout_width="@dimen/icon_mask"
-            android:layout_height="@dimen/icon_mask"
-            android:layout_centerInParent="true"
-            android:background="@drawable/circle"
-            android:scaleType="fitXY" >
-        </ImageView>
+        <!--<ImageView-->
+            <!--android:id="@+id/icon_mask"-->
+            <!--android:layout_width="@dimen/icon_mask"-->
+            <!--android:layout_height="@dimen/icon_mask"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:background="@drawable/circle"-->
+            <!--android:scaleType="fitXY" >-->
+        <!--</ImageView>-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
     <!-- Thumbnail Image -->
-    <!--<ImageView-->
-        <!--android:id="@+id/thumbnail"-->
-        <!--android:layout_width="@dimen/icon_dimen"-->
-        <!--android:layout_height="@dimen/icon_dimen"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:layout_marginRight="8dp"-->
-        <!--android:src="@drawable/default_icon"-->
-        <!--android:scaleType="fitXY" >-->
-    <!--</ImageView>-->
+    <com.jonalmeida.project420.CircleImageView
+        android:id="@+id/layout_circle_mask"
+        android:layout_width="@dimen/icon_dimen"
+        android:layout_height="@dimen/icon_dimen"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="8dp"
+        app:border_width="2dp"
+        app:border_color="#FFFFFFFF"
+        android:src="@drawable/default_icon" >
+    </com.jonalmeida.project420.CircleImageView>
 
-    <!-- Movie Title -->
+    <!-- Contact name -->
     <TextView
         android:id="@+id/contact_name"
         android:layout_width="wrap_content"
@@ -57,7 +60,7 @@
         android:text="Jonathan Almeida"
         android:textStyle="bold" />
 
-    <!-- Rating -->
+    <!-- Last SMS message -->
     <TextView
         android:id="@+id/last_message"
         android:layout_width="fill_parent"
@@ -65,7 +68,7 @@
         android:layout_below="@id/contact_name"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/layout_circle_mask"
-        android:text="Last message I sent to you that you can see w.."
+        android:text="Last message I sent to you that you can see.."
         android:textSize="@dimen/last_message" />
 
 </RelativeLayout>

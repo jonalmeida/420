@@ -31,4 +31,12 @@ public class ContactItem {
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLastConversationLine() {
+        return lastConversationLine;
+    }
 }
