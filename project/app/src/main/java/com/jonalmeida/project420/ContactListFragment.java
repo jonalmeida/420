@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +14,6 @@ import android.widget.ListView;
 import com.jonalmeida.project420.dummy.DummyContent;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A list fragment representing a list of Contacts. This fragment
@@ -25,6 +25,8 @@ import java.util.List;
  * interface.
  */
 public class ContactListFragment extends ListFragment {
+
+    private static final String TAG = ContactListFragment.class.toString();
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -90,9 +92,12 @@ public class ContactListFragment extends ListFragment {
                 dummyContactData
         ));
 
+
         // Sample code to retrieve SMS inbox
-        /*
-        Cursor cursor = getActivity().getContentResolver().query(Uri.parse("content://sms/inbox"), null, null, null, null);
+        String[] columns = {"DISTINCT thread_id, address", "body"};
+        Cursor cursor = getActivity().getContentResolver().query(Uri.parse("content://sms/inbox"),
+                columns, "address IS NOT NULL) GROUP BY (address",
+                null, null);
         if (cursor.moveToFirst()) { // must check the result to prevent exception
             do {
                 String msgData = "";
@@ -101,12 +106,14 @@ public class ContactListFragment extends ListFragment {
                     msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
                 }
                 // use msgData
-                Log.v("ProjectSMS", msgData);
+                Log.v(TAG, msgData);
             } while (cursor.moveToNext());
         } else {
             // empty box, no SMS
+            Log.v(TAG, "We dyin' here bub!");
         }
-        */
+        cursor.close();
+
     }
 
     @Override
