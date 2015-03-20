@@ -83,8 +83,8 @@ public class ContactListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        dummyContactData.add(new ContactItem("Jonathan Almeida", "last message.."));
-        dummyContactData.add(new ContactItem("Joella Almeida", "Another last message.."));
+//        dummyContactData.add(new ContactItem("Jonathan Almeida", "last message.."));
+//        dummyContactData.add(new ContactItem("Joella Almeida", "Another last message.."));
 
         setListAdapter(new ContactListAdapter(
                 getActivity(),
@@ -94,7 +94,7 @@ public class ContactListFragment extends ListFragment {
 
 
         // Sample code to retrieve SMS inbox
-        String[] columns = {"DISTINCT thread_id, address", "body"};
+        String[] columns = {"DISTINCT thread_id, address", "body", "person"};
         Cursor cursor = getActivity().getContentResolver().query(Uri.parse("content://sms/inbox"),
                 columns, "address IS NOT NULL) GROUP BY (address",
                 null, null);
@@ -105,6 +105,7 @@ public class ContactListFragment extends ListFragment {
                 {
                     msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
                 }
+                dummyContactData.add(new ContactItem(cursor.getString(1), cursor.getString(2)));
                 // use msgData
                 Log.v(TAG, msgData);
             } while (cursor.moveToNext());
