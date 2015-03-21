@@ -83,37 +83,11 @@ public class ContactListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        dummyContactData.add(new ContactItem("Jonathan Almeida", "last message.."));
-//        dummyContactData.add(new ContactItem("Joella Almeida", "Another last message.."));
-
         setListAdapter(new ContactListAdapter(
                 getActivity(),
                 R.layout.contact_list_item,
                 dummyContactData
         ));
-
-
-        // Sample code to retrieve SMS inbox
-        String[] columns = {"DISTINCT thread_id, address", "body", "person"};
-        Cursor cursor = getActivity().getContentResolver().query(Uri.parse("content://sms/inbox"),
-                columns, "address IS NOT NULL) GROUP BY (address",
-                null, null);
-        if (cursor.moveToFirst()) { // must check the result to prevent exception
-            do {
-                String msgData = "";
-                for(int idx=0;idx<cursor.getColumnCount();idx++)
-                {
-                    msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
-                }
-                dummyContactData.add(new ContactItem(cursor.getString(1), cursor.getString(2)));
-                // use msgData
-                Log.v(TAG, msgData);
-            } while (cursor.moveToNext());
-        } else {
-            // empty box, no SMS
-            Log.v(TAG, "We dyin' here bub!");
-        }
-        cursor.close();
 
     }
 
@@ -126,6 +100,9 @@ public class ContactListFragment extends ListFragment {
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
+
+        loadLastMessageList();
+
     }
 
     @Override
@@ -186,5 +163,29 @@ public class ContactListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
+    }
+
+    private void loadLastMessageList() {
+        // Sample code to retrieve SMS inbox
+        String[] columns = {"DISTINCT thread_id, address", "body", "person"};
+        Cursor cursor = getActivity().getContentResolver().query(Uri.parse("content://sms/inbox"),
+                columns, "address IS NOT NULL) GROUP BY (address",
+                null, null);
+        if (cursor.moveToFirst()) { // must check the result to prevent exception
+            do {
+                String msgData = "";
+                for(int idx=0;idx<cursor.getColumnCount();idx++)
+                {
+                    msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
+                }
+                dummyContactData.add(new ContactItem(cursor.getString(1), cursor.getString(2)));
+                // use msgData
+                Log.v(TAG, msgData);
+            } while (cursor.moveToNext());
+        } else {
+            // empty box, no SMS
+            Log.v(TAG, "We dyin' here bub!");
+        }
+        cursor.close();
     }
 }
