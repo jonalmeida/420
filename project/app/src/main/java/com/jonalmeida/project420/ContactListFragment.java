@@ -10,9 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
-
-import com.jonalmeida.project420.dummy.DummyContent;
-
 import java.util.ArrayList;
 
 /**
@@ -59,7 +56,7 @@ public class ContactListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(String id);
+        void onItemSelected(String person, int threadId, String address);
     }
 
     /**
@@ -68,7 +65,7 @@ public class ContactListFragment extends ListFragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String id) {
+        public void onItemSelected(String person, int threadId, String address) {
         }
     };
 
@@ -131,7 +128,11 @@ public class ContactListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        ContactItem selectedContact = (ContactItem) listView.getAdapter().getItem(position);
+        Log.d(TAG, "Our selected item: " + selectedContact);
+        mCallbacks.onItemSelected(selectedContact.getPersonId(),
+                selectedContact.getThreadId(),
+                selectedContact.getDisplayName());
     }
 
     @Override
@@ -186,13 +187,14 @@ public class ContactListFragment extends ListFragment {
                 //     msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
                 // }
                 // // use msgData
-                // Log.v(TAG, msgData);
+                // Log.d(TAG, msgData);
 
-                dummyContactData.add(new ContactItem(cursor.getString(1), cursor.getString(2)));
+                dummyContactData.add(new ContactItem(cursor.getString(1), cursor.getString(3),
+                        cursor.getString(2)));
             } while (cursor.moveToNext());
         } else {
             // empty box, no SMS
-            Log.v(TAG, "We dyin' here bub!");
+            Log.d(TAG, "We dyin' here bub!");
         }
         cursor.close();
     }

@@ -33,7 +33,7 @@ public class ContactListAdapter extends ArrayAdapter<ContactItem> {
 //        image.setImageResource(R.drawable.default_icon);
 
         TextView name = (TextView) listItemView.findViewById(R.id.contact_name);
-        name.setText(contact.getName());
+        name.setText(contact.getDisplayName());
 
         TextView desc = (TextView) listItemView.findViewById(R.id.last_message);
         desc.setText(contact.getLastConversationLine());

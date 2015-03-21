@@ -39,13 +39,19 @@ public class ContactDetailActivity extends ActionBarActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(ContactDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(ContactDetailFragment.ARG_ITEM_ID));
+            arguments.putString(ContactDetailFragment.ARG_PERSON,
+                    getIntent().getStringExtra(ContactDetailFragment.ARG_PERSON));
+            arguments.putInt(ContactDetailFragment.ARG_THREAD_ID,
+                    getIntent().getIntExtra(ContactDetailFragment.ARG_THREAD_ID, -1));
+            arguments.putString(ContactDetailFragment.ARG_ADDRESS,
+                    getIntent().getStringExtra(ContactDetailFragment.ARG_ADDRESS));
             ContactDetailFragment fragment = new ContactDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.contact_detail_container, fragment)
                     .commit();
+
+            setTitle(getIntent().getStringExtra(ContactDetailFragment.ARG_ADDRESS));
         }
     }
 

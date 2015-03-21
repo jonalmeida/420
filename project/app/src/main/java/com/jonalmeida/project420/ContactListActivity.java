@@ -3,6 +3,7 @@ package com.jonalmeida.project420;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 
 
 /**
@@ -23,6 +24,8 @@ import android.support.v7.app.ActionBarActivity;
  */
 public class ContactListActivity extends ActionBarActivity
         implements ContactListFragment.Callbacks {
+
+    private static final String TAG = ContactListActivity.class.toString();
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -61,13 +64,15 @@ public class ContactListActivity extends ActionBarActivity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(String id) {
+    public void onItemSelected(String person, int threadId, String address) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(ContactDetailFragment.ARG_ITEM_ID, id);
+            arguments.putString(ContactDetailFragment.ARG_PERSON, person);
+            arguments.putInt(ContactDetailFragment.ARG_THREAD_ID, threadId);
+            arguments.putString(ContactDetailFragment.ARG_ADDRESS, address);
             ContactDetailFragment fragment = new ContactDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -78,7 +83,10 @@ public class ContactListActivity extends ActionBarActivity
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, ContactDetailActivity.class);
-            detailIntent.putExtra(ContactDetailFragment.ARG_ITEM_ID, id);
+            Log.d(TAG, "Adding address: " + address);
+            detailIntent.putExtra(ContactDetailFragment.ARG_PERSON, person);
+            detailIntent.putExtra(ContactDetailFragment.ARG_THREAD_ID, threadId);
+            detailIntent.putExtra(ContactDetailFragment.ARG_ADDRESS, address);
             startActivity(detailIntent);
             overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
         }

@@ -1,14 +1,13 @@
 package com.jonalmeida.project420;
 
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-
-import com.jonalmeida.project420.dummy.DummyContent;
 
 /**
  * A fragment representing a single Contact detail screen.
@@ -21,12 +20,16 @@ public class ContactDetailFragment extends Fragment {
      * The fragment argument representing the item ID that this fragment
      * represents.
      */
-    public static final String ARG_ITEM_ID = "item_id";
+    public static final String ARG_THREAD_ID = Telephony.Sms.THREAD_ID;
+    public static final String ARG_PERSON = Telephony.Sms.PERSON;
+    public static final String ARG_ADDRESS = Telephony.Sms.ADDRESS;
 
     /**
      * The dummy content this fragment is presenting.
      */
-    private DummyContent.DummyItem mItem;
+    private String personId;
+    private int threadId;
+    private String address;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -39,11 +42,15 @@ public class ContactDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+        if (getArguments().containsKey(ARG_PERSON)) {
+            personId = getArguments().getString(ARG_PERSON);
+        }
+        if (getArguments().containsKey(ARG_THREAD_ID)) {
+            threadId = getArguments().getInt(ARG_THREAD_ID);
+        }
+        if (getArguments().containsKey(ARG_ADDRESS)) {
+            address = getArguments().getString(ARG_ADDRESS);
+            Log.v("DetailFragment", "Got the address in args: " + address);
         }
     }
 
@@ -53,8 +60,8 @@ public class ContactDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_contact_detail, container, false);
 
         // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.contact_detail)).setText(mItem.content);
+        if (address != null) {
+            ((TextView) rootView.findViewById(R.id.contact_detail)).setText(address);
         }
 
         return rootView;

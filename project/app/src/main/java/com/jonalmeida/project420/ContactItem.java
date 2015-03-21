@@ -1,27 +1,28 @@
 package com.jonalmeida.project420;
 
 public class ContactItem {
-    private String name, lastConversationLine;
+    private String displayName, lastConversationLine;
     private String profileImage; // String?
+    private String personId;
     private String dominantColor; // To set the color of the conversation window
     private int thread_id;
     private String address; // Phone number
 
-    public ContactItem(String name, String lastConversationLine, String profileImage) {
-        this.name = name;
-        this.lastConversationLine = lastConversationLine;
-        this.profileImage = profileImage;
-    }
-
-    public ContactItem(String name, String lastConversationLine, String address, int thread_id) {
-        this.name = name;
+    public ContactItem(String displayName, String lastConversationLine, String address, int thread_id) {
+        this.displayName = displayName;
         this.lastConversationLine = lastConversationLine;
         this.address = address;
         this.thread_id = thread_id;
     }
 
-    public ContactItem(String name, String lastConversationLine) {
-        this.name = name;
+    public ContactItem(String displayName, String personId, String lastConversationLine) {
+        this.displayName = displayName;
+        this.personId = personId;
+        this.lastConversationLine = lastConversationLine;
+    }
+
+    public ContactItem(String displayName, String lastConversationLine) {
+        this.displayName = displayName;
         this.lastConversationLine = lastConversationLine;
     }
 
@@ -41,19 +42,27 @@ public class ContactItem {
         this.profileImage = profileImage;
     }
 
-    public String getName() {
-        return name;
+    public String getDisplayName() {
+        return displayName;
     }
 
     public String getLastConversationLine() {
         return lastConversationLine;
     }
 
-    public int getThread_id() {
+    public int getThreadId() {
         return thread_id;
     }
 
     public String getAddress() {
         return address;
+    }
+
+    public String getPersonId() {
+        return personId;
+    }
+
+    public String toString() {
+        return "displayName: " + displayName + " personId: " + personId + " threadId: " + thread_id;
     }
 }
