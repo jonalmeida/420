@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,19 +26,34 @@ public class ContactListAdapter extends ArrayAdapter<ContactItem> {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
 
-        View listItemView = inflater.inflate(this.listItemResId, null);
+        ViewHolder holder;
+
+        if (view == null) {
+            view = inflater.inflate(R.layout.contact_list_item, null);
+            holder = new ViewHolder();
+            holder.nameView = (TextView) view.findViewById(R.id.contact_name);
+            holder.lastMessageView = (TextView) view.findViewById(R.id.last_message);
+            holder.imageView = (ImageView) view.findViewById(R.id.image);
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
 
         ContactItem contact = getItem(position);
 
-//        ImageView image = (ImageView) view.findViewById(R.id.contact_image);
-//        image.setImageResource(R.drawable.default_icon);
+        holder.nameView.setText(contact.getDisplayName());
+        holder.lastMessageView.setText(contact.getLastConversationLine());
 
-        TextView name = (TextView) listItemView.findViewById(R.id.contact_name);
-        name.setText(contact.getDisplayName());
+        if (holder.imageView != null) {
+            // ImageLoader task goes here
+        }
 
-        TextView desc = (TextView) listItemView.findViewById(R.id.last_message);
-        desc.setText(contact.getLastConversationLine());
+        return view;
+    }
 
-        return listItemView;
+    public static class ViewHolder {
+        TextView nameView;
+        TextView lastMessageView;
+        ImageView imageView;
     }
 }
