@@ -166,21 +166,29 @@ public class ContactListFragment extends ListFragment {
     }
 
     private void loadLastMessageList() {
-        // Sample code to retrieve SMS inbox
-        String[] columns = {"DISTINCT thread_id, address", "body", "person"};
-        Cursor cursor = getActivity().getContentResolver().query(Uri.parse("content://sms/inbox"),
-                columns, "address IS NOT NULL) GROUP BY (address",
+        // SQL: SELECT DISTINCT (thread_id, address), body, person WHERE address IS NOT NULL
+        //             GROUP BY address
+
+        String[] columns = { "DISTINCT " + Telephony.Sms.THREAD_ID + ", " + Telephony.Sms.ADDRESS,
+                Telephony.Sms.BODY, Telephony.Sms.PERSON };
+
+        Cursor cursor = getActivity().getContentResolver().query(
+                Uri.parse("content://sms/inbox"), columns,
+                Telephony.Sms.ADDRESS + " IS NOT NULL) GROUP BY (" + Telephony.Sms.ADDRESS,
                 null, null);
+
         if (cursor.moveToFirst()) { // must check the result to prevent exception
             do {
-                String msgData = "";
-                for(int idx=0;idx<cursor.getColumnCount();idx++)
-                {
-                    msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
-                }
+                // Debug printing; no comment to use in verbose logging
+                // String msgData = "";
+                // for(int idx=0;idx<cursor.getColumnCount();idx++)
+                // {
+                //     msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
+                // }
+                // // use msgData
+                // Log.v(TAG, msgData);
+
                 dummyContactData.add(new ContactItem(cursor.getString(1), cursor.getString(2)));
-                // use msgData
-                Log.v(TAG, msgData);
             } while (cursor.moveToNext());
         } else {
             // empty box, no SMS
