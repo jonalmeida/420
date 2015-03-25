@@ -1,6 +1,5 @@
 package com.jonalmeida.project420;
 
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,14 +11,19 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.ImageView;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.ref.WeakReference;
 
 public class ImageViewAsyncLoader extends AsyncTask<String, Void, Bitmap> {
     private static final String TAG = ImageViewAsyncLoader.class.toString();
     private final WeakReference imageViewReference;
     private final Context imageViewContext;
+    private static final String[] PHOTO_ID_PROJECTION = new String[] {
+            ContactsContract.Contacts.PHOTO_ID
+    };
+
+    private static final String[] PHOTO_BITMAP_PROJECTION = new String[] {
+            ContactsContract.CommonDataKinds.Photo.PHOTO
+    };
 
     public ImageViewAsyncLoader(Context context, ImageView imageView) {
         imageViewContext = context;
@@ -32,47 +36,16 @@ public class ImageViewAsyncLoader extends AsyncTask<String, Void, Bitmap> {
 //                imageViewContext.getResources()
 //                .getIdentifier("ic_add", "drawable", imageViewContext.getPackageName()));
 
+        Integer thumbnailId;
         if (address != null) {
-//            ContentResolver cr = imageViewContext.getContentResolver();
-//            Uri phoneBookUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address));
-//
-//            Cursor contact = cr.query(phoneBookUri,
-//                    new String[]{ContactsContract.Contacts._ID}, null, null, null);
-//
-//            if (contact.moveToFirst()) {
-//                long userId = contact.getLong(contact.getColumnIndex(ContactsContract.Contacts._ID));
-//                phoneBookUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, userId);
-//
-//            }
-//            else {
-//                return BitmapFactory.decodeResource(imageViewContext.getResources(), android.R.drawable.ic_menu_report_image);
-//            }
-//
-//            if (phoneBookUri != null) {
-//                InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(
-//                        cr, phoneBookUri);
-//                if (input != null) {
-//                    return BitmapFactory.decodeStream(input);
-//                }
-//            }
-
-            Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(address));
-            Log.d(TAG, "Image uri found: " + uri);
-            InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(imageViewContext.getContentResolver(), uri);
-            if (input == null) {
-                Log.d(TAG, "Couldn't retrieve image, returning null.");
-                return null;
+            thumbnailId = fetchThumbnailId(address);
+            if (thumbnailId != null) {
+                return fetchThumbnail(thumbnailId);
             }
-            Bitmap res = BitmapFactory.decodeStream(input);
-            try {
-                input.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return res;
-        } else {
-            return null;
+            Log.v(TAG, "Couldn't find thumbnail ID");
         }
+        Log.v(TAG, "No phone number found");
+        return null;
     }
 
     @Override
@@ -102,6 +75,42 @@ public class ImageViewAsyncLoader extends AsyncTask<String, Void, Bitmap> {
                 imageView.setImageDrawable(imageView.getContext().getResources()
                         .getDrawable(R.drawable.ic_tick));
             }
+        }
+
+    }
+
+
+    private Integer fetchThumbnailId(String phoneNumber) {
+
+        final Uri uri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+
+        try( final Cursor cursor = imageViewContext.
+                getContentResolver().query(
+                    uri, PHOTO_ID_PROJECTION, null, null,
+                    ContactsContract.Contacts.DISPLAY_NAME + " ASC") ) {
+            Integer thumbnailId = null;
+            if (cursor.moveToFirst()) {
+                thumbnailId = cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_ID));
+            }
+            return thumbnailId;
+        }
+
+    }
+
+    final Bitmap fetchThumbnail(final int thumbnailId) {
+
+        final Uri uri = ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, thumbnailId);
+
+        try( final Cursor cursor = imageViewContext.
+                getContentResolver().query(uri, PHOTO_BITMAP_PROJECTION, null, null, null) ) {
+            Bitmap thumbnail = null;
+            if (cursor.moveToFirst()) {
+                final byte[] thumbnailBytes = cursor.getBlob(0);
+                if (thumbnailBytes != null) {
+                    thumbnail = BitmapFactory.decodeByteArray(thumbnailBytes, 0, thumbnailBytes.length);
+                }
+            }
+            return thumbnail;
         }
 
     }
