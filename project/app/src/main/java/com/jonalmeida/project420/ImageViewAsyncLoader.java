@@ -56,7 +56,7 @@ public class ImageViewAsyncLoader extends AsyncTask<String, Void, Bitmap> {
 //                }
 //            }
 
-            Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, address);
+            Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(address));
             Log.d(TAG, "Image uri found: " + uri);
             InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(imageViewContext.getContentResolver(), uri);
             if (input == null) {
