@@ -63,6 +63,9 @@ public class ContactItem {
     }
 
     public String toString() {
-        return "displayName: " + displayName + " personId: " + personId + " threadId: " + thread_id;
+        return "displayName: " + displayName +
+                " personId: " + personId +
+                " threadId: " + thread_id +
+                " address: " + address;
     }
 }

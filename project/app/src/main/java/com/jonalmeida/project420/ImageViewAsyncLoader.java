@@ -56,7 +56,7 @@ public class ImageViewAsyncLoader extends AsyncTask<String, Void, Bitmap> {
 //                }
 //            }
 
-            Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(address));
+            Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, address);
             Log.d(TAG, "Image uri found: " + uri);
             InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(imageViewContext.getContentResolver(), uri);
             if (input == null) {
@@ -98,10 +98,10 @@ public class ImageViewAsyncLoader extends AsyncTask<String, Void, Bitmap> {
             // Only use this bit for testing. By default, we use the Android face icon.
             // This bit of code sets the icon to a 'tick' if we can find a profile image.
 
-            //else {
-            //    imageView.setImageDrawable(imageView.getContext().getResources()
-            //            .getDrawable(R.drawable.ic_tick));
-            //}
+            else {
+                imageView.setImageDrawable(imageView.getContext().getResources()
+                        .getDrawable(R.drawable.ic_tick));
+            }
         }
 
     }

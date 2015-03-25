@@ -49,7 +49,8 @@ public class ContactListAdapter extends ArrayAdapter<ContactItem> {
 
         if (holder.imageView != null) {
             // ImageLoader task goes here
-            new ImageViewAsyncLoader(context, holder.imageView).execute(contact.getPersonId());
+            Log.d(TAG, "Trying to get profile image of " + contact);
+            new ImageViewAsyncLoader(context, holder.imageView).execute(contact.getDisplayName());
         }
 
         return view;
