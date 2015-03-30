@@ -171,7 +171,7 @@ public class ContactListFragment extends ListFragment {
         //             GROUP BY address
 
         String[] columns = { "DISTINCT " + Telephony.Sms.THREAD_ID + ", " + Telephony.Sms.ADDRESS,
-                Telephony.Sms.BODY, Telephony.Sms.PERSON };
+                Telephony.Sms.BODY };
 
         Cursor cursor = getActivity().getContentResolver().query(
                 Uri.parse("content://sms/inbox"), columns,
@@ -189,7 +189,7 @@ public class ContactListFragment extends ListFragment {
                 // // use msgData
                 // Log.d(TAG, msgData);
 
-                dummyContactData.add(new ContactItem(cursor.getString(1), cursor.getString(3),
+                dummyContactData.add(new ContactItem(cursor.getString(1), cursor.getString(1),
                         cursor.getString(2)));
             } while (cursor.moveToNext());
         } else {

@@ -12,12 +12,10 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.lang.ref.WeakReference;
 
-public class ImageViewAsyncLoader extends AsyncTask<String, Void, Bitmap> {
-    private static final String TAG = ImageViewAsyncLoader.class.toString();
+public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
+    private static final String TAG = ContactInfoAsyncLoader.class.toString();
     private final WeakReference imageViewReference;
     private final WeakReference nameTextViewReference;
     private final Context imageViewContext;
@@ -32,7 +30,7 @@ public class ImageViewAsyncLoader extends AsyncTask<String, Void, Bitmap> {
             ContactsContract.CommonDataKinds.Photo.PHOTO
     };
 
-    public ImageViewAsyncLoader(Context context, ImageView imageView, TextView name) {
+    public ContactInfoAsyncLoader(Context context, ImageView imageView, TextView name) {
         imageViewContext = context;
         imageViewReference = new WeakReference<>(imageView);
         nameTextViewReference = new WeakReference<>(name);
