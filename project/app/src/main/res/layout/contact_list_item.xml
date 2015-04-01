@@ -57,7 +57,6 @@
         android:layout_alignTop="@+id/layout_circle_mask"
         android:layout_toRightOf="@+id/layout_circle_mask"
         android:textSize="@dimen/name"
-        android:text="Jonathan Almeida"
         android:textStyle="bold" />
 
     <!-- Last SMS message -->

@@ -65,7 +65,7 @@ public class ContactListFragment extends ListFragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String person, int threadId, String address) {
+        public void onItemSelected(String display_name, int threadId, String address) {
         }
     };
 
@@ -130,9 +130,9 @@ public class ContactListFragment extends ListFragment {
         // fragment is attached to one) that an item has been selected.
         ContactItem selectedContact = (ContactItem) listView.getAdapter().getItem(position);
         Log.d(TAG, "Our selected item: " + selectedContact);
-        mCallbacks.onItemSelected(selectedContact.getPersonId(),
+        mCallbacks.onItemSelected(selectedContact.getDisplayName(),
                 selectedContact.getThreadId(),
-                selectedContact.getDisplayName());
+                selectedContact.getAddress());
     }
 
     @Override

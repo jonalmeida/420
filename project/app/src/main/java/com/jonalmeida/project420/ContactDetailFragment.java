@@ -1,6 +1,7 @@
 package com.jonalmeida.project420;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -23,6 +24,7 @@ public class ContactDetailFragment extends Fragment {
     public static final String ARG_THREAD_ID = Telephony.Sms.THREAD_ID;
     public static final String ARG_PERSON = Telephony.Sms.PERSON;
     public static final String ARG_ADDRESS = Telephony.Sms.ADDRESS;
+    public static final String ARG_DISPLAY_NAME = ContactsContract.Contacts.DISPLAY_NAME;
 
     /**
      * The dummy content this fragment is presenting.
@@ -30,6 +32,7 @@ public class ContactDetailFragment extends Fragment {
     private String personId;
     private int threadId;
     private String address;
+    private String display_name;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -44,6 +47,9 @@ public class ContactDetailFragment extends Fragment {
 
         if (getArguments().containsKey(ARG_PERSON)) {
             personId = getArguments().getString(ARG_PERSON);
+        }
+        if (getArguments().containsKey(ARG_DISPLAY_NAME)) {
+            display_name = getArguments().getString(ARG_DISPLAY_NAME);
         }
         if (getArguments().containsKey(ARG_THREAD_ID)) {
             threadId = getArguments().getInt(ARG_THREAD_ID);

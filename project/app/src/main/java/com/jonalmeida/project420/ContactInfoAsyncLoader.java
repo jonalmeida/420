@@ -74,9 +74,9 @@ public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
             bitmap = null;
         }
 
+        ContactItem contactItem = contactItemReference.get();
         ImageView imageView = imageViewReference.get();
         TextView nameReference = nameTextViewReference.get();
-        ContactItem contactItem = contactItemReference.get();
 
         if (imageView != null) {
 
@@ -113,14 +113,11 @@ public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
                     ContactsContract.Contacts.DISPLAY_NAME + " ASC") ) {
             ContactItem item = contactItemReference.get();
             if (cursor.moveToFirst()) {
-
-                item.setProfileImage(
-                        cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_ID))
-                );
                 thumbnailId = cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_ID));
-                item.setDisplayName (
-                        cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
-                );
+                item.setProfileImage(thumbnailId);
+                nameFromContact = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                Log.v(TAG, "name retrieved: " + nameFromContact);
+                item.setDisplayName (nameFromContact);
             }
             return thumbnailId;
         }

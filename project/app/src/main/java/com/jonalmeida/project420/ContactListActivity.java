@@ -64,13 +64,13 @@ public class ContactListActivity extends ActionBarActivity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(String person, int threadId, String address) {
+    public void onItemSelected(String display_name, int threadId, String address) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(ContactDetailFragment.ARG_PERSON, person);
+            arguments.putString(ContactDetailFragment.ARG_DISPLAY_NAME, display_name);
             arguments.putInt(ContactDetailFragment.ARG_THREAD_ID, threadId);
             arguments.putString(ContactDetailFragment.ARG_ADDRESS, address);
             ContactDetailFragment fragment = new ContactDetailFragment();
@@ -84,7 +84,7 @@ public class ContactListActivity extends ActionBarActivity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, ContactDetailActivity.class);
             Log.d(TAG, "Adding address: " + address);
-            detailIntent.putExtra(ContactDetailFragment.ARG_PERSON, person);
+            detailIntent.putExtra(ContactDetailFragment.ARG_DISPLAY_NAME, display_name);
             detailIntent.putExtra(ContactDetailFragment.ARG_THREAD_ID, threadId);
             detailIntent.putExtra(ContactDetailFragment.ARG_ADDRESS, address);
             startActivity(detailIntent);

@@ -3,7 +3,6 @@ package com.jonalmeida.project420;
 public class ContactItem {
     private String displayName, lastConversationLine;
     private int profileImage; // String?
-    private String personId;
     private String dominantColor; // To set the color of the conversation window
     private int thread_id;
     private String address; // Phone number
@@ -15,9 +14,9 @@ public class ContactItem {
         this.thread_id = thread_id;
     }
 
-    public ContactItem(String displayName, String personId, String lastConversationLine) {
+    public ContactItem(String displayName, String address, String lastConversationLine) {
         this.displayName = displayName;
-        this.personId = personId;
+        this.address = address;
         this.lastConversationLine = lastConversationLine;
     }
 
@@ -44,11 +43,8 @@ public class ContactItem {
 
     public String getAddress() { return address; }
 
-    public String getPersonId() { return personId; }
-
     public String toString() {
         return "displayName: " + displayName +
-                " personId: " + personId +
                 " threadId: " + thread_id +
                 " address: " + address;
     }
