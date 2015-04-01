@@ -74,7 +74,6 @@ public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
             bitmap = null;
         }
 
-        ContactItem contactItem = contactItemReference.get();
         ImageView imageView = imageViewReference.get();
         TextView nameReference = nameTextViewReference.get();
 
@@ -116,7 +115,7 @@ public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
                 thumbnailId = cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_ID));
                 item.setProfileImage(thumbnailId);
                 nameFromContact = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                Log.v(TAG, "name retrieved: " + nameFromContact);
+                Log.d(TAG, "name retrieved: " + nameFromContact);
                 item.setDisplayName (nameFromContact);
             }
             return thumbnailId;
