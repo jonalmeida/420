@@ -2,7 +2,7 @@ package com.jonalmeida.project420;
 
 public class ContactItem {
     private String displayName, lastConversationLine;
-    private String profileImage; // String?
+    private int profileImage; // String?
     private String personId;
     private String dominantColor; // To set the color of the conversation window
     private int thread_id;
@@ -26,41 +26,25 @@ public class ContactItem {
         this.lastConversationLine = lastConversationLine;
     }
 
-    public String getDominantColor() {
-        return dominantColor;
-    }
+    public void setDisplayName(String displayName) { this.displayName = displayName; }
 
-    public void setDominantColor(String dominantColor) {
-        this.dominantColor = dominantColor;
-    }
+    public void setDominantColor(String dominantColor) { this.dominantColor = dominantColor; }
 
-    public String getProfileImage() {
-        return profileImage;
-    }
+    public void setProfileImage(int profileImage) { this.profileImage = profileImage; }
 
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
-    }
+    public String getDominantColor() { return dominantColor; }
 
-    public String getDisplayName() {
-        return displayName;
-    }
+    public int getProfileImage() { return profileImage; }
 
-    public String getLastConversationLine() {
-        return lastConversationLine;
-    }
+    public String getDisplayName() { return displayName; }
 
-    public int getThreadId() {
-        return thread_id;
-    }
+    public String getLastConversationLine() { return lastConversationLine; }
 
-    public String getAddress() {
-        return address;
-    }
+    public int getThreadId() { return thread_id; }
 
-    public String getPersonId() {
-        return personId;
-    }
+    public String getAddress() { return address; }
+
+    public String getPersonId() { return personId; }
 
     public String toString() {
         return "displayName: " + displayName +

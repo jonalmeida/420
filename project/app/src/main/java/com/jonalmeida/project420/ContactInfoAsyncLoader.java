@@ -16,10 +16,14 @@ import java.lang.ref.WeakReference;
 
 public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
     private static final String TAG = ContactInfoAsyncLoader.class.toString();
-    private final WeakReference imageViewReference;
-    private final WeakReference nameTextViewReference;
-    private final Context imageViewContext;
-    private static final String[] PHOTO_ID_PROJECTION = new String[] {
+    private final WeakReference<ImageView> imageViewReference;
+    private final WeakReference<TextView> nameTextViewReference;
+    private final WeakReference<ContactItem> contactItemReference;
+    private final Context activityContext;
+
+    Integer thumbnailId = null;
+
+    private static final String[] CONTACT_ID_PROJECTION = new String[] {
             ContactsContract.Contacts.PHOTO_ID,
             ContactsContract.Contacts.DISPLAY_NAME
     };
@@ -30,21 +34,23 @@ public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
             ContactsContract.CommonDataKinds.Photo.PHOTO
     };
 
-    public ContactInfoAsyncLoader(Context context, ImageView imageView, TextView name) {
-        imageViewContext = context;
+    public ContactInfoAsyncLoader(Context context, ContactItem contactItem, ImageView imageView,
+                                    TextView name) {
+        activityContext = context;
+        contactItemReference = new WeakReference<>(contactItem);
         imageViewReference = new WeakReference<>(imageView);
         nameTextViewReference = new WeakReference<>(name);
     }
 
     private Bitmap getContactImage(String address) {
         // Placeholder for actual code to retrieve user's profile image
-//        return BitmapFactory.decodeResource(imageViewContext.getResources(),
-//                imageViewContext.getResources()
-//                .getIdentifier("ic_add", "drawable", imageViewContext.getPackageName()));
+//        return BitmapFactory.decodeResource(activityContext.getResources(),
+//                activityContext.getResources()
+//                .getIdentifier("ic_add", "drawable", activityContext.getPackageName()));
 
         Integer thumbnailId;
         if (address != null) {
-            thumbnailId = fetchThumbnailId(address);
+            thumbnailId = fetchContactId(address);
             if (thumbnailId != null) {
                 return fetchThumbnail(thumbnailId);
             }
@@ -68,8 +74,10 @@ public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
             bitmap = null;
         }
 
-        ImageView imageView = (ImageView) imageViewReference.get();
-        TextView nameReference = (TextView) nameTextViewReference.get();
+        ImageView imageView = imageViewReference.get();
+        TextView nameReference = nameTextViewReference.get();
+        ContactItem contactItem = contactItemReference.get();
+
         if (imageView != null) {
 
             if (bitmap != null) {
@@ -92,19 +100,27 @@ public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
     }
 
 
-    private Integer fetchThumbnailId(String phoneNumber) {
+    private Integer fetchContactId(String phoneNumber) {
 
-        final Uri uri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+        final Uri uri = Uri.withAppendedPath(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,
+                Uri.encode(phoneNumber));
 
 
-        try( final Cursor cursor = imageViewContext.
+        try( final Cursor cursor = activityContext.
                 getContentResolver().query(
-                    uri, PHOTO_ID_PROJECTION, null, null,
+                    uri, CONTACT_ID_PROJECTION, null, null,
                     ContactsContract.Contacts.DISPLAY_NAME + " ASC") ) {
-            Integer thumbnailId = null;
+            ContactItem item = contactItemReference.get();
             if (cursor.moveToFirst()) {
+
+                item.setProfileImage(
+                        cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_ID))
+                );
                 thumbnailId = cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_ID));
-                nameFromContact = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                item.setDisplayName (
+                        cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+                );
             }
             return thumbnailId;
         }
@@ -115,7 +131,7 @@ public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
 
         final Uri uri = ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, thumbnailId);
 
-        try( final Cursor cursor = imageViewContext.
+        try( final Cursor cursor = activityContext.
                 getContentResolver().query(uri, PHOTO_BITMAP_PROJECTION, null, null, null) ) {
             Bitmap thumbnail = null;
             if (cursor.moveToFirst()) {
@@ -127,11 +143,6 @@ public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
             return thumbnail;
         }
 
-    }
-
-    final String fetchContactName() {
-        // So hacky it hurts!
-        return nameFromContact;
     }
 
 }
