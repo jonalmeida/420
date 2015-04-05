@@ -17,6 +17,9 @@ import android.widget.TextView;
  * on handsets.
  */
 public class ContactDetailFragment extends Fragment {
+
+    private static final String TAG = "ContactDetailFragment";
+
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.

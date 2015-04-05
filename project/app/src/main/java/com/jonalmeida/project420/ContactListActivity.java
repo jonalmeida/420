@@ -25,7 +25,7 @@ import android.util.Log;
 public class ContactListActivity extends ActionBarActivity
         implements ContactListFragment.Callbacks {
 
-    private static final String TAG = ContactListActivity.class.toString();
+    private static final String TAG = "ContactListActivity";
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet

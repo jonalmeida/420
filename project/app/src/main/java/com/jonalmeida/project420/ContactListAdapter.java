@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class ContactListAdapter extends ArrayAdapter<ContactItem> {
 
-    private static final String TAG = ContactListAdapter.class.toString();
+    private static final String TAG = "ContactListAdapter";
 
     private Context context;
     private int listItemResId;

@@ -23,7 +23,7 @@ import java.util.ArrayList;
  */
 public class ContactListFragment extends ListFragment {
 
-    private static final String TAG = ContactListFragment.class.toString();
+    private static final String TAG = "ContactListFragment";
 
     /**
      * The serialization (saved instance state) Bundle key representing the

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.lang.ref.WeakReference;
 
 public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
-    private static final String TAG = ContactInfoAsyncLoader.class.toString();
+    private static final String TAG = "ContactInfoAsyncLoader";
     private final WeakReference<ImageView> imageViewReference;
     private final WeakReference<TextView> nameTextViewReference;
     private final WeakReference<ContactItem> contactItemReference;
