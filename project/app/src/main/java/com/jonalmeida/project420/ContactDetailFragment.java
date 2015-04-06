@@ -1,5 +1,8 @@
 package com.jonalmeida.project420;
 
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
@@ -73,6 +76,52 @@ public class ContactDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.contact_detail)).setText(address);
         }
 
+        getConversationThread();
+
         return rootView;
+    }
+
+    private void getConversationThread() {
+        // Get last line of every message
+//        Uri SMS_INBOX = Uri.parse("content://sms/conversations/");
+//        Cursor cursor = getActivity().getContentResolver().query(SMS_INBOX, null, null, null, "date desc");
+//
+//        if (cursor.moveToFirst()) {
+//            do {
+//                // Print thread
+//                String msgData = "";
+//                 for(int idx=0;idx<cursor.getColumnCount();idx++)
+//                 {
+//                     msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
+//                 }
+//                 // use msgData
+//                 Log.d(TAG, msgData);
+//            } while (cursor.moveToNext());
+//        } else {
+//            Log.d(TAG, "Cursor is empty. Flop like a fish!");
+//        }
+//
+//        cursor.close();
+
+        // Getting threaded conversation
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        final String[] projection = new String[]{"*"};
+       Uri uri = Uri.parse("content://mms-sms/conversations/12");
+         Cursor cursor = contentResolver.query(uri, new String[] {"body", "person", "address"}, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                // Print thread
+                String msgData = "";
+                 for(int idx=0;idx<cursor.getColumnCount();idx++)
+                 {
+                     msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
+                 }
+                 // use msgData
+                 Log.d(TAG, msgData);
+            } while (cursor.moveToNext());
+        } else {
+            Log.d(TAG, "Cursor is empty. Flop like a fish!");
+        }
+        cursor.close();
     }
 }
