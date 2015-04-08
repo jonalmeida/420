@@ -82,42 +82,24 @@ public class ContactDetailFragment extends Fragment {
     }
 
     private void getConversationThread() {
-        // Get last line of every message
-//        Uri SMS_INBOX = Uri.parse("content://sms/conversations/");
-//        Cursor cursor = getActivity().getContentResolver().query(SMS_INBOX, null, null, null, "date desc");
-//
-//        if (cursor.moveToFirst()) {
-//            do {
-//                // Print thread
-//                String msgData = "";
-//                 for(int idx=0;idx<cursor.getColumnCount();idx++)
-//                 {
-//                     msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
-//                 }
-//                 // use msgData
-//                 Log.d(TAG, msgData);
-//            } while (cursor.moveToNext());
-//        } else {
-//            Log.d(TAG, "Cursor is empty. Flop like a fish!");
-//        }
-//
-//        cursor.close();
-
         // Getting threaded conversation
+        // If person == null, the person is you.
+
+        // Use as a wildcard
+        //final String[] projection = new String[]{"*"};
+
         ContentResolver contentResolver = getActivity().getContentResolver();
-        final String[] projection = new String[]{"*"};
-       Uri uri = Uri.parse("content://mms-sms/conversations/12");
-         Cursor cursor = contentResolver.query(uri, new String[] {"body", "person", "address"}, null, null, null);
+        Uri uri = Uri.parse("content://mms-sms/conversations/" + threadId);
+        Cursor cursor = contentResolver.query(uri, new String[] {"body", "person", "address"}, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 // Print thread
-                String msgData = "";
-                 for(int idx=0;idx<cursor.getColumnCount();idx++)
-                 {
-                     msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
-                 }
-                 // use msgData
-                 Log.d(TAG, msgData);
+                //String msgData = "";
+                //for(int idx=0;idx<cursor.getColumnCount();idx++)
+                //{
+                //    msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
+                //}
+                //Log.d(TAG, msgData);
             } while (cursor.moveToNext());
         } else {
             Log.d(TAG, "Cursor is empty. Flop like a fish!");

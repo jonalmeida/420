@@ -14,7 +14,7 @@ public class ContactItem {
         this.thread_id = thread_id;
     }
 
-    public ContactItem(String displayName, String address, String lastConversationLine) {
+    public ContactItem(String displayName, String lastConversationLine, String address) {
         this.displayName = displayName;
         this.address = address;
         this.lastConversationLine = lastConversationLine;

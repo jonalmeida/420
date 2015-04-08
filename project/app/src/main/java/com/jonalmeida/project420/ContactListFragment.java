@@ -181,16 +181,20 @@ public class ContactListFragment extends ListFragment {
         if (cursor.moveToFirst()) { // must check the result to prevent exception
             do {
                 // Debug printing; no comment to use in verbose logging
-                // String msgData = "";
-                // for(int idx=0;idx<cursor.getColumnCount();idx++)
-                // {
-                //     msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
-                // }
-                // // use msgData
-                // Log.d(TAG, msgData);
+                 String msgData = "";
+                 for(int idx=0;idx<cursor.getColumnCount();idx++)
+                 {
+                     msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
+                 }
+                 // use msgData
+                 Log.d(TAG, msgData);
 
-                dummyContactData.add(new ContactItem(cursor.getString(1), cursor.getString(1),
-                        cursor.getString(2)));
+                dummyContactData.add(new ContactItem(
+                        cursor.getString(cursor.getColumnIndex("address")),
+                        cursor.getString(cursor.getColumnIndex("body")),
+                        cursor.getString(cursor.getColumnIndex("address")),
+                        cursor.getInt(cursor.getColumnIndex("thread_id")))
+                );
             } while (cursor.moveToNext());
         } else {
             // empty box, no SMS
