@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +66,7 @@ public class ContactDetailFragment extends Fragment {
             address = getArguments().getString(ARG_ADDRESS);
             Log.v("DetailFragment", "Got the address in args: " + address);
         }
+
     }
 
     @Override
@@ -72,9 +75,15 @@ public class ContactDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_contact_detail, container, false);
 
         // Show the dummy content as text in a TextView.
-        if (address != null) {
-            ((TextView) rootView.findViewById(R.id.contact_detail)).setText(address);
-        }
+        //if (address != null) {
+        //    ((TextView) rootView.findViewById(R.id.contact_detail)).setText(address);
+        //}
+
+        RecyclerView recList = (RecyclerView) rootView.findViewById(R.id.cardList);
+        recList.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(rootView.getContext());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recList.setLayoutManager(llm);
 
         getConversationThread();
 
