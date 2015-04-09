@@ -15,6 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * A fragment representing a single Contact detail screen.
  * This fragment is either contained in a {@link ContactListActivity}
@@ -84,18 +87,19 @@ public class ContactDetailFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(rootView.getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-
-        getConversationThread();
+        recList.setAdapter(new MessageThreadAdapter(getConversationThread()));
 
         return rootView;
     }
 
-    private void getConversationThread() {
+    private List<TextMessage> getConversationThread() {
         // Getting threaded conversation
         // If person == null, the person is you.
 
         // Use as a wildcard
         //final String[] projection = new String[]{"*"};
+
+        List<TextMessage> threadMessage = new LinkedList<>();
 
         ContentResolver contentResolver = getActivity().getContentResolver();
         Uri uri = Uri.parse("content://mms-sms/conversations/" + threadId);
@@ -109,10 +113,19 @@ public class ContactDetailFragment extends Fragment {
                 //    msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
                 //}
                 //Log.d(TAG, msgData);
+
+                threadMessage.add(new TextMessage(
+                        cursor.getString(cursor.getColumnIndex("address")),
+                        cursor.getString(cursor.getColumnIndex("body")),
+                        1234L
+                ));
+
             } while (cursor.moveToNext());
         } else {
             Log.d(TAG, "Cursor is empty. Flop like a fish!");
         }
         cursor.close();
+
+        return threadMessage;
     }
 }
