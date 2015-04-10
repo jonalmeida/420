@@ -5,6 +5,12 @@ public class TextMessage {
     protected String message;
     protected long timestamp;
 
+    public TextMessage() {
+        this.name = null;
+        this.message = null;
+        this.timestamp = 0;
+    }
+
     public TextMessage(String name, String message, Long timestamp) {
         this.name = name;
         this.message = message;

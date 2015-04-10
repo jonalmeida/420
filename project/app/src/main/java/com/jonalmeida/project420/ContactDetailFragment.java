@@ -114,11 +114,27 @@ public class ContactDetailFragment extends Fragment {
                 //}
                 //Log.d(TAG, msgData);
 
-                threadMessage.add(new TextMessage(
-                        cursor.getString(cursor.getColumnIndex("address")),
-                        cursor.getString(cursor.getColumnIndex("body")),
-                        1234L
-                ));
+                TextMessage tm = new TextMessage();
+
+                final int person_type = cursor.getType(cursor.getColumnIndex("person"));
+                if (person_type == Cursor.FIELD_TYPE_NULL) {
+                    tm.name = cursor.getString(cursor.getColumnIndex("address"));
+                    try {
+                        tm.name = this.display_name;
+                    } catch (NullPointerException e) {
+                        Log.e(TAG, "There wasn't a displayable name passed to the message thread."
+                            + " We're using this phone number instead"
+                        );
+                    }
+                } else {
+                    tm.name = "Jonathan Almeida";
+                }
+
+                tm.message = cursor.getString(cursor.getColumnIndex("body"));
+                tm.timestamp = 1234;
+
+
+                threadMessage.add(tm);
 
             } while (cursor.moveToNext());
         } else {
