@@ -7,14 +7,20 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
+import java.util.Date;
 import java.util.List;
 
 public class MessageThreadAdapter extends RecyclerView.Adapter<MessageThreadAdapter.TextMessageViewHolder> {
 
     private List<TextMessage> messageThread;
 
+    private PrettyTime prettyTime;
+
     public MessageThreadAdapter(List<TextMessage> messageThread) {
         this.messageThread = messageThread;
+        this.prettyTime = new PrettyTime();
     }
 
     /**
@@ -67,7 +73,7 @@ public class MessageThreadAdapter extends RecyclerView.Adapter<MessageThreadAdap
         TextMessage tm = messageThread.get(position);
         holder.messageTextView.setText(tm.message);
         holder.nameTextView.setText(tm.name);
-        holder.timestampTextView.setText(Long.toString(tm.timestamp));
+        holder.timestampTextView.setText(prettyTime.format(new Date(tm.timestamp)));
     }
 
     /**
