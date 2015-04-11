@@ -109,7 +109,11 @@ public class ContactDetailFragment extends Fragment {
 
         ContentResolver contentResolver = getActivity().getContentResolver();
         Uri uri = Uri.parse("content://mms-sms/conversations/" + threadId);
-        Cursor cursor = contentResolver.query(uri, new String[] {"body", "person", "address"}, null, null, null);
+        Cursor cursor = contentResolver.query(
+                uri, new String[] {"body", "person", "address", "normalized_date"},
+                null, null,
+                "normalized_date"
+        );
         if (cursor.moveToFirst()) {
             do {
                 // Print thread
@@ -144,7 +148,7 @@ public class ContactDetailFragment extends Fragment {
                 }
 
                 tm.message = cursor.getString(cursor.getColumnIndex("body"));
-                tm.timestamp = 1234;
+                tm.timestamp = Long.parseLong(cursor.getString(cursor.getColumnIndex("normalized_date")));
 
 
                 threadMessage.add(tm);
