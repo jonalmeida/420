@@ -123,7 +123,7 @@ public class ContactDetailFragment extends Fragment {
                 TextMessage tm = new TextMessage();
 
                 final int person_type = cursor.getType(cursor.getColumnIndex("person"));
-                if (person_type == Cursor.FIELD_TYPE_NULL) {
+                if (person_type != Cursor.FIELD_TYPE_NULL) {
                     tm.name = cursor.getString(cursor.getColumnIndex("address"));
                     try {
                         tm.name = this.display_name;
