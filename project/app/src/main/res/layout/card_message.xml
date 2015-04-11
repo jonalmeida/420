@@ -13,23 +13,12 @@
         android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/primary"
-        android:text="contact det"
-        android:gravity="center_vertical"
-        android:textColor="@android:color/white"
-        android:textSize="14dp"/>
-
-    <TextView
         android:id="@+id/message_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name"
         android:gravity="center_vertical"
         android:textSize="10dp"
-        android:layout_below="@id/title"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"/>
 
