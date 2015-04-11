@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -89,8 +88,12 @@ public class ContactDetailFragment extends Fragment {
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(rootView.getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
+        llm.setStackFromEnd(true);
         recList.setLayoutManager(llm);
         recList.setAdapter(new MessageThreadAdapter(getConversationThread()));
+
+        // Alternatively, for scrolling to the bottom..
+        //recList.scrollToPosition(threadMessage.size()-1);
 
         return rootView;
     }
