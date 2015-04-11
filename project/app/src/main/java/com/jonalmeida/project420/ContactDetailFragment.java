@@ -44,6 +44,7 @@ public class ContactDetailFragment extends Fragment {
     private int threadId;
     private String address;
     private String display_name;
+    private AccountUtils.UserProfile userProfile;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -69,6 +70,8 @@ public class ContactDetailFragment extends Fragment {
             address = getArguments().getString(ARG_ADDRESS);
             Log.v("DetailFragment", "Got the address in args: " + address);
         }
+
+        userProfile = AccountUtils.getUserProfile(getActivity());
 
     }
 
@@ -127,7 +130,14 @@ public class ContactDetailFragment extends Fragment {
                         );
                     }
                 } else {
-                    tm.name = "Jonathan Almeida";
+
+                    if (userProfile != null) {
+                        if (userProfile.possibleNames().size() > 0) {
+                            tm.name = userProfile.possibleNames().get(0);
+                        } else {
+                            tm.name = userProfile.possiblePhoneNumbers().get(0);
+                        }
+                    }
                 }
 
                 tm.message = cursor.getString(cursor.getColumnIndex("body"));
