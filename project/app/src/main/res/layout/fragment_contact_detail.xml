@@ -17,13 +17,31 @@
         android:id="@+id/cardList"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/editText2" />
+        android:layout_above="@+id/card_view_compose" />
 
-    <EditText
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/card_view_compose"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText2"
+        card_view:cardCornerRadius="4dp"
+        android:layout_margin="5dp"
         android:layout_centerVertical="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true" >
+
+        <EditText
+            android:layout_marginStart="10sp"
+            android:layout_marginEnd="10sp"
+            android:layout_marginTop="10sp"
+            android:layout_marginBottom="10sp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_text_compose"
+            android:background="@null"
+            android:hint="Send message" />
+
+    </android.support.v7.widget.CardView>
+
 
 </RelativeLayout>
