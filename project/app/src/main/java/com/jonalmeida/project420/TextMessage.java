@@ -4,6 +4,7 @@ public class TextMessage {
     protected String name;
     protected String message;
     protected long timestamp;
+    protected boolean receipient = false;
 
     public TextMessage() {
         this.name = null;

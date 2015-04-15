@@ -129,6 +129,7 @@ public class ContactDetailFragment extends Fragment {
 
                 final int person_type = cursor.getType(cursor.getColumnIndex("person"));
                 if (person_type != Cursor.FIELD_TYPE_NULL) {
+                    tm.receipient = true;
                     tm.name = cursor.getString(cursor.getColumnIndex("address"));
                     try {
                         tm.name = this.display_name;

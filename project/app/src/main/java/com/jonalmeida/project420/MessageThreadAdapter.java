@@ -1,6 +1,13 @@
 package com.jonalmeida.project420;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +21,14 @@ import java.util.List;
 
 public class MessageThreadAdapter extends RecyclerView.Adapter<MessageThreadAdapter.TextMessageViewHolder> {
 
+    private static final String TAG = "MessageThreadAdapter";
+
     private List<TextMessage> messageThread;
 
     private PrettyTime prettyTime;
+
+    private View itemView;
+    private TextMessageViewHolder itemViewHolder;
 
     public MessageThreadAdapter(List<TextMessage> messageThread) {
         this.messageThread = messageThread;
@@ -45,10 +57,11 @@ public class MessageThreadAdapter extends RecyclerView.Adapter<MessageThreadAdap
      */
     @Override
     public TextMessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.
+        itemView = LayoutInflater.
                 from(parent.getContext()).
                 inflate(R.layout.card_message, parent, false);
-        return new TextMessageViewHolder(itemView);
+        itemViewHolder = new TextMessageViewHolder(itemView);
+        return itemViewHolder;
     }
 
     /**
@@ -74,6 +87,9 @@ public class MessageThreadAdapter extends RecyclerView.Adapter<MessageThreadAdap
         holder.messageTextView.setText(tm.message);
         holder.nameTextView.setText(tm.name);
         holder.timestampTextView.setText(prettyTime.format(new Date(tm.timestamp)));
+        Log.d(TAG, "Message from " + (tm.receipient ? "receipient" : "me"));
+        Log.d(TAG, "ItemView is " + (itemView == null ?  "null" : "not null"));
+        holder.bindMessage(tm);
     }
 
     /**
@@ -86,16 +102,60 @@ public class MessageThreadAdapter extends RecyclerView.Adapter<MessageThreadAdap
         return messageThread.size();
     }
 
+    public static float convertDpToPixel(float dp, Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = dp * (metrics.densityDpi / 160f);
+        return px;
+    }
+
     public static class TextMessageViewHolder extends RecyclerView.ViewHolder {
         protected TextView nameTextView;
         protected TextView messageTextView;
         protected TextView timestampTextView;
+        protected CardView itemView;
 
         public TextMessageViewHolder(View v) {
             super(v);
+            itemView = (CardView) v;
             nameTextView = (TextView) v.findViewById(R.id.message_name);
             messageTextView = (TextView) v.findViewById(R.id.message_text);
             timestampTextView = (TextView) v.findViewById(R.id.message_timestamp);
+        }
+
+        public void bindMessage(TextMessage tm) {
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) itemView.getLayoutParams();
+            final int backgroundColor;
+            final int fontColor;
+            if (tm.receipient) {
+                backgroundColor = R.color.accent;
+                fontColor = android.R.color.primary_text_dark;
+                layoutParams.setMargins(
+                        Math.round(convertDpToPixel(26, itemView.getContext())),
+                        Math.round(convertDpToPixel(5, itemView.getContext())),
+                        Math.round(convertDpToPixel(0, itemView.getContext())),
+                        Math.round(convertDpToPixel(5, itemView.getContext()))
+                );
+            } else {
+                backgroundColor = android.R.color.background_light;
+                fontColor = android.R.color.primary_text_light;
+                //layoutParams.setMargins(0, 5, 0, 5); // or whatever they are by default, in R.layout.card_message
+                layoutParams.setMargins(
+                        Math.round(convertDpToPixel(0, itemView.getContext())),
+                        Math.round(convertDpToPixel(5, itemView.getContext())),
+                        Math.round(convertDpToPixel(26, itemView.getContext())),
+                        Math.round(convertDpToPixel(5, itemView.getContext()))
+                );
+            }
+            View cardLayout = itemView.findViewById(R.id.card_layout);
+            cardLayout.setBackgroundColor(itemView.getResources().getColor(backgroundColor));
+
+            int foo = itemView.getResources().getColor(fontColor);
+
+            ((TextView) itemView.findViewById(R.id.message_name)).setTextColor(foo);
+            ((TextView) itemView.findViewById(R.id.message_text)).setTextColor(foo);
+            ((TextView) itemView.findViewById(R.id.message_timestamp)).setTextColor(foo);
+            itemView.setLayoutParams(layoutParams);
         }
     }
 }

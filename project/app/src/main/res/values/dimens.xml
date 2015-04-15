@@ -20,4 +20,7 @@
     <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_large">32dp</dimen>
     <dimen name="margin_huge">64dp</dimen>
+
+    <dimen name="card_msg_recipient_top">5dp</dimen>
+    <dimen name="card_msg_recipient_bottom">5dp</dimen>
 </resources>

@@ -4,11 +4,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     card_view:cardCornerRadius="4dp"
-    android:layout_margin="5dp" >
+    android:layout_marginEnd="10sp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp" >
 
     <RelativeLayout
+        android:id="@+id/card_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -26,7 +29,7 @@
         android:id="@+id/message_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Surname"
+        android:text="Placeholder text message"
         android:gravity="center_vertical"
         android:textSize="10dp"
         android:layout_below="@id/message_name"
@@ -37,12 +40,12 @@
         android:id="@+id/message_timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
+        android:text="Timestamp"
         android:textSize="10dp"
         android:layout_marginTop="10dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="150dp"
-        android:layout_alignBaseline="@id/message_name"/>
+        android:layout_marginRight="15dp"
+        android:gravity="right" />
 
     </RelativeLayout>
 
