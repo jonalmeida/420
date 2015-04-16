@@ -36,9 +36,9 @@ public class ComposeSmsFragment extends Fragment {
     /**
      * For checking if we're in a master-details view
      */
-    private static final String IS_TWO_PANE = "two_pane";
+    public static final String ARG_IS_TWO_PANE = "two_pane";
 
-    private String mIsTwoPane;
+    private boolean mIsTwoPane = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -47,14 +47,13 @@ public class ComposeSmsFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param twoPane Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment ComposeSmsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ComposeSmsFragment newInstance(String twoPane) {
+    public static ComposeSmsFragment newInstance(boolean twoPane) {
         ComposeSmsFragment fragment = new ComposeSmsFragment();
         Bundle args = new Bundle();
-        args.putString(IS_TWO_PANE, twoPane);
+        args.putBoolean(ARG_IS_TWO_PANE, twoPane);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,7 +66,7 @@ public class ComposeSmsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mIsTwoPane = getArguments().getString(IS_TWO_PANE);
+            mIsTwoPane = getArguments().getBoolean(ARG_IS_TWO_PANE);
         }
     }
 

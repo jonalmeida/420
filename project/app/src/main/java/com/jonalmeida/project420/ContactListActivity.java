@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.View;
 
 
 /**
@@ -101,12 +100,15 @@ public class ContactListActivity extends ActionBarActivity
                 @Override
                 public void onCheckedChanged(FloatingActionButton fabView, boolean isChecked) {
                     if (mTwoPane) {
+                        Bundle arguments = new Bundle();
+                        arguments.putBoolean(ComposeSmsFragment.ARG_IS_TWO_PANE, mTwoPane);
                         ComposeSmsFragment fragment = new ComposeSmsFragment();
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.contact_detail_container, fragment)
                                 .commit();
                     } else {
                         Intent composeIntent = new Intent(fabView.getContext(), ComposeSmsActivity.class);
+                        composeIntent.putExtra(ComposeSmsFragment.ARG_IS_TWO_PANE, mTwoPane);
                         startActivity(composeIntent);
                     }
                 }
