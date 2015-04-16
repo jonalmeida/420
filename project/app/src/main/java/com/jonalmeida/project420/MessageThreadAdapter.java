@@ -139,7 +139,6 @@ public class MessageThreadAdapter extends RecyclerView.Adapter<MessageThreadAdap
             } else {
                 backgroundColor = android.R.color.background_light;
                 fontColor = android.R.color.primary_text_light;
-                //layoutParams.setMargins(0, 5, 0, 5); // or whatever they are by default, in R.layout.card_message
                 layoutParams.setMargins(
                         Math.round(convertDpToPixel(0, itemView.getContext())),
                         Math.round(convertDpToPixel(5, itemView.getContext())),
@@ -150,11 +149,11 @@ public class MessageThreadAdapter extends RecyclerView.Adapter<MessageThreadAdap
             View cardLayout = itemView.findViewById(R.id.card_layout);
             cardLayout.setBackgroundColor(itemView.getResources().getColor(backgroundColor));
 
-            int foo = itemView.getResources().getColor(fontColor);
+            int colorAsInt = itemView.getResources().getColor(fontColor);
 
-            ((TextView) itemView.findViewById(R.id.message_name)).setTextColor(foo);
-            ((TextView) itemView.findViewById(R.id.message_text)).setTextColor(foo);
-            ((TextView) itemView.findViewById(R.id.message_timestamp)).setTextColor(foo);
+            ((TextView) itemView.findViewById(R.id.message_name)).setTextColor(colorAsInt);
+            ((TextView) itemView.findViewById(R.id.message_text)).setTextColor(colorAsInt);
+            ((TextView) itemView.findViewById(R.id.message_timestamp)).setTextColor(colorAsInt);
             itemView.setLayoutParams(layoutParams);
         }
     }
