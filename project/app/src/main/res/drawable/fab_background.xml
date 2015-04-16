@@ -16,15 +16,16 @@
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_checked="true">
-        <ripple android:color="@color/fab_color_2_muted">
-            <item>
-                <shape>
-                    <solid android:color="@color/fab_color_2" />
-                </shape>
-            </item>
-        </ripple>
-    </item>
+    <!-- We don't need the true state, just the onClicked state -->
+    <!--<item android:state_checked="true">-->
+        <!--<ripple android:color="@color/fab_color_2_muted">-->
+            <!--<item>-->
+                <!--<shape>-->
+                    <!--<solid android:color="@color/fab_color_2" />-->
+                <!--</shape>-->
+            <!--</item>-->
+        <!--</ripple>-->
+    <!--</item>-->
 
     <item>
         <ripple android:color="@color/fab_color_1_muted">

@@ -100,7 +100,6 @@ public class ContactListActivity extends ActionBarActivity
             fab.setOnCheckedChangeListener(new FloatingActionButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(FloatingActionButton fabView, boolean isChecked) {
-                    Log.d(TAG, "FAB " + (isChecked ? "checked" : "not checked"));
                     if (mTwoPane) {
                         ComposeSmsFragment fragment = new ComposeSmsFragment();
                         getSupportFragmentManager().beginTransaction()
@@ -112,7 +111,6 @@ public class ContactListActivity extends ActionBarActivity
                     }
                 }
             });
-
     }
 
     @Override
