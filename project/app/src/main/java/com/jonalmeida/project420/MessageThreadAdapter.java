@@ -117,7 +117,7 @@ public class MessageThreadAdapter extends RecyclerView.Adapter<MessageThreadAdap
 
         public TextMessageViewHolder(View v) {
             super(v);
-            itemView = (CardView) v;
+            itemView = (CardView) v.findViewById(R.id.card_view);
             nameTextView = (TextView) v.findViewById(R.id.message_name);
             messageTextView = (TextView) v.findViewById(R.id.message_text);
             timestampTextView = (TextView) v.findViewById(R.id.message_timestamp);
