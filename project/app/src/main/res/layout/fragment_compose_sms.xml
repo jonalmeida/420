@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <EditText
+    <EditText android:id="@+id/compose_contact_search_edit_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingStart="10sp"
