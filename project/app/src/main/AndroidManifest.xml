@@ -29,6 +29,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ContactListActivity" />
         </activity>
+        <receiver android:name="com.klinker.android.send_message.SentReceiver" >
+            <intent-filter>
+                <action android:name="com.jonalmeida.project420.SMS_SENT" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.klinker.android.send_message.DeliveredReceiver" >
+            <intent-filter>
+                <action android:name="com.jonalmeida.project420.SMS_DELIVERED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

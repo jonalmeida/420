@@ -21,10 +21,15 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    // Support libraries
     compile 'com.android.support:appcompat-v7:22.0.0'
-    compile 'com.google.android.gms:play-services-identity:7.0.0'
     compile 'com.android.support:support-v4:22.0.0'
     compile 'com.android.support:recyclerview-v7:21.0.0'
     compile 'com.android.support:cardview-v7:21.0.0'
+    // Used for deriving User account name
+    compile 'com.google.android.gms:play-services-identity:7.0.0'
+    // Converts timestamp to a better looking one
     compile 'org.ocpsoft.prettytime:prettytime:3.2.7.Final'
+    // Easy sending of SMS messages
+    compile 'com.klinkerapps:android-smsmms:+'
 }
