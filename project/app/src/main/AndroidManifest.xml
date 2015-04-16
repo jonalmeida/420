@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PROFILE"/>
+    <uses-permission android:name="android.permission.BROADCAST_SMS"/>
 
     <application
         android:allowBackup="true"
@@ -20,10 +21,38 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android-dir/mms-sms" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.SENDTO" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ContactDetailActivity"
             android:label="@string/title_contact_detail"
+            android:parentActivityName=".ContactListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ContactListActivity" />
+        </activity>
+        <activity
+            android:name=".ComposeSmsActivity"
+            android:label="@string/title_compose_sms"
             android:parentActivityName=".ContactListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -40,6 +69,13 @@
                 <action android:name="com.jonalmeida.project420.SMS_DELIVERED" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".SmsReceiver"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

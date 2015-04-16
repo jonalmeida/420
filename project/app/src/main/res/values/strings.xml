@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">420 Project</string>
     <string name="title_contact_detail">Contact Detail</string>
+    <string name="title_compose_sms">Compose Message</string>
     <string name="conversation_list_name">Conversations</string>
     <string name="sample_show_log">Show Log</string>
     <string name="sample_hide_log">Hide Log</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

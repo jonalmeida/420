@@ -1,9 +1,11 @@
 package com.jonalmeida.project420;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.View;
 
 
 /**
@@ -23,7 +25,7 @@ import android.util.Log;
  * to listen for item selections.
  */
 public class ContactListActivity extends ActionBarActivity
-        implements ContactListFragment.Callbacks {
+        implements ContactListFragment.Callbacks, ComposeSmsFragment.OnFragmentInteractionListener {
 
     private static final String TAG = "ContactListActivity";
 
@@ -56,6 +58,7 @@ public class ContactListActivity extends ActionBarActivity
 
         setTitle(R.string.conversation_list_name);
 
+        setFabIconListener();
         // TODO: If exposing deep links into your app, handle intents here.
     }
 
@@ -78,7 +81,7 @@ public class ContactListActivity extends ActionBarActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.contact_detail_container, fragment)
                     .commit();
-
+            // FAB listener
         } else {
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
@@ -90,5 +93,30 @@ public class ContactListActivity extends ActionBarActivity
             startActivity(detailIntent);
             overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
         }
+    }
+
+    private void setFabIconListener() {
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_1);
+            fab.setOnCheckedChangeListener(new FloatingActionButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(FloatingActionButton fabView, boolean isChecked) {
+                    Log.d(TAG, "FAB " + (isChecked ? "checked" : "not checked"));
+                    if (mTwoPane) {
+                        ComposeSmsFragment fragment = new ComposeSmsFragment();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.contact_detail_container, fragment)
+                                .commit();
+                    } else {
+                        Intent composeIntent = new Intent(fabView.getContext(), ComposeSmsActivity.class);
+                        startActivity(composeIntent);
+                    }
+                }
+            });
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
