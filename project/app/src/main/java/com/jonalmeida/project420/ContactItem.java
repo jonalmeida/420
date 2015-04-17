@@ -25,11 +25,17 @@ public class ContactItem {
         this.thread_id = thread_id;
     }
 
+    public ContactItem(){ }
+
     public void setDisplayName(String displayName) { this.displayName = displayName; }
 
     public void setDominantColor(String dominantColor) { this.dominantColor = dominantColor; }
 
     public void setProfileImage(int profileImage) { this.profileImage = profileImage; }
+
+    public void setThreadId(int thread_id) { this.thread_id = thread_id; }
+
+    public void setAddress(String address) { this.address = address; }
 
     public String getDominantColor() { return dominantColor; }
 

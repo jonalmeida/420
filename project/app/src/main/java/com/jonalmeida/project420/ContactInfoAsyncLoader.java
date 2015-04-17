@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +21,8 @@ public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
     private final WeakReference<TextView> nameTextViewReference;
     private final WeakReference<ContactItem> contactItemReference;
     private final Context activityContext;
+
+    private final ActionBar actionBar;
 
     Integer thumbnailId = null;
 
@@ -40,6 +43,15 @@ public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
         contactItemReference = new WeakReference<>(contactItem);
         imageViewReference = new WeakReference<>(imageView);
         nameTextViewReference = new WeakReference<>(name);
+        actionBar = null;
+    }
+
+    public ContactInfoAsyncLoader(Context context, ContactItem contactItem, ActionBar actionBar) {
+        activityContext = context;
+        contactItemReference = new WeakReference<>(contactItem);
+        imageViewReference = null;
+        nameTextViewReference = null;
+        this.actionBar = actionBar;
     }
 
     private Bitmap getContactImage(String address) {
@@ -74,25 +86,44 @@ public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
             bitmap = null;
         }
 
-        ImageView imageView = imageViewReference.get();
-        TextView nameReference = nameTextViewReference.get();
+        ImageView imageView = null;
+        TextView nameReference  = null;
+        try {
+            imageView = imageViewReference.get();
+        } catch (NullPointerException e) {
+            Log.d(TAG, "imageViewReference not yet.");
+        }
+
+        try {
+            nameReference = nameTextViewReference.get();
+        } catch (NullPointerException e) {
+            Log.d(TAG, "nameTextViewReference not yet.");
+        }
 
         if (imageView != null) {
 
             if (bitmap != null) {
                 imageView.setImageBitmap(bitmap);
             }
-            if (nameReference != null) {
-                if (nameFromContact != null && !nameFromContact.isEmpty()) {
-                    nameReference.setText(nameFromContact);
-                }
-            }
+
             // Only use this bit for testing. By default, we use the Android face icon.
             // This bit of code sets the icon to a 'tick' if we can find a profile image.
 
             else {
                 imageView.setImageDrawable(imageView.getContext().getResources()
                         .getDrawable(R.drawable.ic_tick));
+            }
+        }
+
+        if (nameReference != null) {
+            if (nameFromContact != null && !nameFromContact.isEmpty()) {
+                nameReference.setText(nameFromContact);
+            }
+        } else {
+            Log.d(TAG, "nameReference is null, trying action bar.");
+            if (actionBar != null) {
+                Log.d(TAG, "All lucked out with setting the title");
+                actionBar.setTitle(nameFromContact);
             }
         }
 

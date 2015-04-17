@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 
 /**
@@ -45,13 +47,22 @@ public class ContactDetailActivity extends ActionBarActivity {
                     getIntent().getIntExtra(ContactDetailFragment.ARG_THREAD_ID, -1));
             arguments.putString(ContactDetailFragment.ARG_ADDRESS,
                     getIntent().getStringExtra(ContactDetailFragment.ARG_ADDRESS));
+
+
+            setTitle(getIntent().getStringExtra(ContactDetailFragment.ARG_DISPLAY_NAME));
+
+            ContactItem contactItem = new ContactItem();
+
+            new ContactInfoAsyncLoader(this, contactItem, getSupportActionBar())
+                    .execute(getIntent().getStringExtra(ContactDetailFragment.ARG_ADDRESS));
+
+
             ContactDetailFragment fragment = new ContactDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.contact_detail_container, fragment)
                     .commit();
 
-            setTitle(getIntent().getStringExtra(ContactDetailFragment.ARG_DISPLAY_NAME));
         }
     }
 
@@ -75,5 +86,15 @@ public class ContactDetailActivity extends ActionBarActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+    }
+
+    private TextView getTextViewTitle() {
+        TextView foo = (TextView) this.findViewById(R.id.title);
+
+        if (foo != null) {
+            foo.setText("FOOWOW");
+        }
+
+        return (TextView) findViewById(R.id.action_bar_title);
     }
 }

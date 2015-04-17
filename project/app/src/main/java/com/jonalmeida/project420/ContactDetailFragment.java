@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -45,6 +47,8 @@ public class ContactDetailFragment extends Fragment {
     private String address;
     private String display_name;
     private AccountUtils.UserProfile userProfile;
+    private ContactItem contactItem;
+    private ImageView contactImage;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -57,17 +61,22 @@ public class ContactDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        contactItem = new ContactItem();
+
         if (getArguments().containsKey(ARG_PERSON)) {
             personId = getArguments().getString(ARG_PERSON);
         }
         if (getArguments().containsKey(ARG_DISPLAY_NAME)) {
             display_name = getArguments().getString(ARG_DISPLAY_NAME);
+            contactItem.setDisplayName(display_name);
         }
         if (getArguments().containsKey(ARG_THREAD_ID)) {
             threadId = getArguments().getInt(ARG_THREAD_ID);
+            contactItem.setThreadId(threadId);
         }
         if (getArguments().containsKey(ARG_ADDRESS)) {
             address = getArguments().getString(ARG_ADDRESS);
+            contactItem.setAddress(address);
             Log.v("DetailFragment", "Got the address in args: " + address);
         }
 
@@ -85,6 +94,9 @@ public class ContactDetailFragment extends Fragment {
         //    ((TextView) rootView.findViewById(R.id.contact_detail)).setText(address);
         //}
 
+        new ContactInfoAsyncLoader(getActivity(), contactItem, contactImage, null)
+                .execute(address);
+
         RecyclerView recList = (RecyclerView) rootView.findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(rootView.getContext());
@@ -92,6 +104,7 @@ public class ContactDetailFragment extends Fragment {
         llm.setStackFromEnd(true);
         recList.setLayoutManager(llm);
         recList.setAdapter(new MessageThreadAdapter(getConversationThread()));
+
 
         // Alternatively, for scrolling to the bottom..
         //recList.scrollToPosition(threadMessage.size()-1);
@@ -132,7 +145,7 @@ public class ContactDetailFragment extends Fragment {
                     tm.receipient = true;
                     tm.name = cursor.getString(cursor.getColumnIndex("address"));
                     try {
-                        tm.name = this.display_name;
+                        tm.name = this.contactItem.getDisplayName();
                     } catch (NullPointerException e) {
                         Log.e(TAG, "There wasn't a displayable name passed to the message thread."
                             + " We're using this phone number instead"
