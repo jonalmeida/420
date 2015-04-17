@@ -20,9 +20,9 @@ public class ContactItem {
         this.lastConversationLine = lastConversationLine;
     }
 
-    public ContactItem(String displayName, String lastConversationLine) {
-        this.displayName = displayName;
-        this.lastConversationLine = lastConversationLine;
+    public ContactItem(String address, int thread_id) {
+        this.address = address;
+        this.thread_id = thread_id;
     }
 
     public void setDisplayName(String displayName) { this.displayName = displayName; }

@@ -1,6 +1,7 @@
 package com.jonalmeida.project420;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -136,10 +137,12 @@ public class ComposeSmsFragment extends Fragment {
 
         contactSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -154,23 +157,68 @@ public class ComposeSmsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        String phoneNo = null;
-        Uri uri = data.getData();
-        Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-        phoneNo = cursor.getString(phoneIndex);
-        Log.d(TAG, "We got this number: " + phoneNo);
+        if (resultCode == Activity.RESULT_OK) {
+            String phoneNumber;
+            Uri uri = data.getData();
+            Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+            cursor.moveToFirst();
+            int phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER);
+            phoneNumber = cursor.getString(phoneIndex);
+            Log.d(TAG, "We got this number: " + phoneNumber);
 
-        if (phoneNo != null) {
-            // TODO: Check if the number exists in thread
-            // If true, open the new activity/fragment with that number
+            if (phoneNumber != null) {
+                // TODO: Check if the number exists in thread
+                ContactItem contactItem = existingThreadFromNumber(phoneNumber);
+                // If true, open the new activity/fragment with that number
+                if (contactItem != null) {
+                    if (mIsTwoPane) {
+                        // Treat as fragment
+                    } else {
+                        // Treat as activity
+                        Intent detailIntent = new Intent(getActivity(), ContactDetailActivity.class);
+                        detailIntent.putExtra(ContactDetailFragment.ARG_DISPLAY_NAME, contactItem.getAddress());
+                        detailIntent.putExtra(ContactDetailFragment.ARG_THREAD_ID, contactItem.getThreadId());
+                        detailIntent.putExtra(ContactDetailFragment.ARG_ADDRESS, contactItem.getAddress());
+                        startActivity(detailIntent);
+                        getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                    }
+                } else { // Else, new conversation with number in it.
+                    contactSearch.append(phoneNumber);
+                }
+            }
 
-            // Else, new conversation with number in it.
-            contactSearch.append(phoneNo);
+            cursor.close();
         }
+    }
 
+    public ContactItem existingThreadFromNumber(String phoneNumber) {
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        Uri uri = Uri.parse("content://mms-sms/conversations");
+        Cursor cursor = contentResolver.query(
+                uri, new String[]{"body", "person", "address", "normalized_date", "thread_id"},
+                null, null,
+                "normalized_date"
+        );
+        if (cursor.moveToFirst()) {
+            do {
+                final int addressType = cursor.getType(cursor.getColumnIndex("address"));
+                if (addressType == Cursor.FIELD_TYPE_NULL) {
+                    continue;
+                }
+                String convoAddress = cursor.getString(cursor.getColumnIndex("address"));
+                if (convoAddress.equals(phoneNumber)) {
+                    ContactItem contact = new ContactItem(
+                            cursor.getString(cursor.getColumnIndex("address")),
+                            cursor.getInt(cursor.getColumnIndex("thread_id"))
+                    );
+                    Log.d(TAG, "We got an existing thread: " + contact);
+                    cursor.close();
+                    return contact;
+                }
+            } while (cursor.moveToNext());
+        }
         cursor.close();
+        return null;
     }
 
 }
