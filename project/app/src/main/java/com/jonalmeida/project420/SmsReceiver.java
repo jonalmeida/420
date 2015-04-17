@@ -8,9 +8,6 @@ import android.telephony.SmsMessage;
 import android.widget.Toast;
 
 public class SmsReceiver extends BroadcastReceiver {
-    public SmsReceiver() {
-    }
-
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();

@@ -59,8 +59,6 @@ public class ContactListActivity extends ActionBarActivity
 
         setFabIconListener();
         // TODO: If exposing deep links into your app, handle intents here.
-
-        SmsReceiver receiver = new SmsReceiver();
     }
 
     /**
@@ -82,7 +80,6 @@ public class ContactListActivity extends ActionBarActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.contact_detail_container, fragment)
                     .commit();
-            // FAB listener
         } else {
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.

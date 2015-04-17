@@ -173,6 +173,15 @@ public class ComposeSmsFragment extends Fragment {
                 if (contactItem != null) {
                     if (mIsTwoPane) {
                         // Treat as fragment
+                        Bundle arguments = new Bundle();
+                        arguments.putString(ContactDetailFragment.ARG_DISPLAY_NAME, contactItem.getAddress());
+                        arguments.putInt(ContactDetailFragment.ARG_THREAD_ID, contactItem.getThreadId());
+                        arguments.putString(ContactDetailFragment.ARG_ADDRESS, contactItem.getAddress());
+                        ContactDetailFragment fragment = new ContactDetailFragment();
+                        fragment.setArguments(arguments);
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.contact_detail_container, fragment)
+                                .commit();
                     } else {
                         // Treat as activity
                         Intent detailIntent = new Intent(getActivity(), ContactDetailActivity.class);
