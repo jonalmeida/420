@@ -9,10 +9,14 @@ import android.provider.Telephony;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,15 +44,16 @@ public class ContactDetailFragment extends Fragment {
     public static final String ARG_DISPLAY_NAME = ContactsContract.Contacts.DISPLAY_NAME;
 
     /**
-     * The dummy content this fragment is presenting.
+     * Contact specific data.
      */
     private String personId;
-    private int threadId;
+    private int threadId = -1;
     private String address;
     private String display_name;
     private AccountUtils.UserProfile userProfile;
     private ContactItem contactItem;
     private ImageView contactImage;
+    private SmsSender smsSender;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -82,6 +87,8 @@ public class ContactDetailFragment extends Fragment {
 
         userProfile = AccountUtils.getUserProfile(getActivity());
 
+        smsSender = new SmsSender(getActivity(), threadId);
+
     }
 
     @Override
@@ -108,6 +115,9 @@ public class ContactDetailFragment extends Fragment {
 
         // Alternatively, for scrolling to the bottom..
         //recList.scrollToPosition(threadMessage.size()-1);
+
+        setNewEditTextListener(rootView);
+        setSendButtonListener(rootView);
 
         return rootView;
     }
@@ -175,5 +185,42 @@ public class ContactDetailFragment extends Fragment {
         cursor.close();
 
         return threadMessage;
+    }
+
+    private void setNewEditTextListener(View v) {
+        EditText editText = (EditText) v.findViewById(R.id.edit_text_compose);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.length() != 0) {
+
+                }
+            }
+        });
+    }
+
+    private void setSendButtonListener(View v) {
+        ImageView sendButton = (ImageView) v.findViewById(R.id.send_button);
+        final EditText editText = (EditText) v.findViewById(R.id.edit_text_compose);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Clicked!");
+                if (editText.getText().length() != 0) {
+                    smsSender.sendSmsMessage(editText.getText().toString(), address);
+                    editText.setText("");
+                }
+            }
+        });
     }
 }

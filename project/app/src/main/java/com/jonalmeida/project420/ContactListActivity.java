@@ -59,6 +59,8 @@ public class ContactListActivity extends ActionBarActivity
 
         setFabIconListener();
         // TODO: If exposing deep links into your app, handle intents here.
+
+        SmsReceiver receiver = new SmsReceiver();
     }
 
     /**

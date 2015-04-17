@@ -5,8 +5,10 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE"/>
-    <uses-permission android:name="android.permission.BROADCAST_SMS"/>
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.BROADCAST_SMS" />
+
+    <uses-feature android:name="android.hardware.telephony" />
 
     <application
         android:allowBackup="true"
@@ -23,14 +25,18 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="vnd.android-dir/mms-sms" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.SENDTO" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="sms" />
                 <data android:scheme="smsto" />
                 <data android:scheme="mms" />
@@ -38,7 +44,9 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
@@ -46,6 +54,16 @@
             android:name=".ContactDetailActivity"
             android:label="@string/title_contact_detail"
             android:parentActivityName=".ContactListActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+            </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ContactListActivity" />
@@ -54,27 +72,51 @@
             android:name=".ComposeSmsActivity"
             android:label="@string/title_compose_sms"
             android:parentActivityName=".ContactListActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+            </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ContactListActivity" />
         </activity>
+
         <receiver android:name="com.klinker.android.send_message.SentReceiver" >
             <intent-filter>
                 <action android:name="com.jonalmeida.project420.SMS_SENT" />
             </intent-filter>
         </receiver>
-
         <receiver android:name="com.klinker.android.send_message.DeliveredReceiver" >
             <intent-filter>
                 <action android:name="com.jonalmeida.project420.SMS_DELIVERED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".SmsReceiver"
-            android:permission="android.permission.BROADCAST_SMS">
+        <receiver
+            android:name=".SmsReceiver"
+            android:enabled="true"
+            android:exported="true" >
             <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+        <service android:name=".SmsSendService"
+            android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+            </intent-filter>
+        </service>
 
     </application>
 

@@ -180,6 +180,7 @@ public class ComposeSmsFragment extends Fragment {
                         detailIntent.putExtra(ContactDetailFragment.ARG_THREAD_ID, contactItem.getThreadId());
                         detailIntent.putExtra(ContactDetailFragment.ARG_ADDRESS, contactItem.getAddress());
                         startActivity(detailIntent);
+                        getActivity().finish();
                         getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                     }
                 } else { // Else, new conversation with number in it.
