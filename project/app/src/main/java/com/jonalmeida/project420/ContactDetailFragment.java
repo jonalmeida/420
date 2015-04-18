@@ -2,6 +2,7 @@ package com.jonalmeida.project420;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -138,51 +139,57 @@ public class ContactDetailFragment extends Fragment {
                 null, null,
                 "normalized_date"
         );
-        if (cursor.moveToFirst()) {
-            do {
-                // Print thread
-                //String msgData = "";
-                //for(int idx=0;idx<cursor.getColumnCount();idx++)
-                //{
-                //    msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
-                //}
-                //Log.d(TAG, msgData);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    // Print thread
+                    //String msgData = "";
+                    //for(int idx=0;idx<cursor.getColumnCount();idx++)
+                    //{
+                    //    msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
+                    //}
+                    //Log.d(TAG, msgData);
 
-                TextMessage tm = new TextMessage();
+                    TextMessage tm = new TextMessage();
 
-                final int person_type = cursor.getType(cursor.getColumnIndex("person"));
-                if (person_type != Cursor.FIELD_TYPE_NULL) {
-                    tm.receipient = true;
-                    tm.name = cursor.getString(cursor.getColumnIndex("address"));
-                    try {
-                        tm.name = this.contactItem.getDisplayName();
-                    } catch (NullPointerException e) {
-                        Log.e(TAG, "There wasn't a displayable name passed to the message thread."
-                            + " We're using this phone number instead"
-                        );
-                    }
-                } else {
+                    final int person_type = cursor.getType(cursor.getColumnIndex("person"));
+                    if (person_type != Cursor.FIELD_TYPE_NULL) {
+                        tm.receipient = true;
+                        tm.name = cursor.getString(cursor.getColumnIndex("address"));
+                        try {
+                            tm.name = this.contactItem.getDisplayName();
+                        } catch (NullPointerException e) {
+                            Log.e(TAG, "There wasn't a displayable name passed to the message thread."
+                                            + " We're using this phone number instead"
+                            );
+                        }
+                    } else {
 
-                    if (userProfile != null) {
-                        if (userProfile.possibleNames().size() > 0) {
-                            tm.name = userProfile.possibleNames().get(0);
-                        } else {
-                            tm.name = userProfile.possiblePhoneNumbers().get(0);
+                        if (userProfile != null) {
+                            if (userProfile.possibleNames().size() > 0) {
+                                tm.name = userProfile.possibleNames().get(0);
+                            } else {
+                                tm.name = userProfile.possiblePhoneNumbers().get(0);
+                            }
                         }
                     }
-                }
 
-                tm.message = cursor.getString(cursor.getColumnIndex("body"));
-                tm.timestamp = Long.parseLong(cursor.getString(cursor.getColumnIndex("normalized_date")));
+                    tm.message = cursor.getString(cursor.getColumnIndex("body"));
+                    tm.timestamp = Long.parseLong(cursor.getString(cursor.getColumnIndex("normalized_date")));
 
 
-                threadMessage.add(tm);
+                    threadMessage.add(tm);
 
-            } while (cursor.moveToNext());
-        } else {
-            Log.d(TAG, "Cursor is empty. Flop like a fish!");
+                } while (cursor.moveToNext());
+            } else {
+                Log.d(TAG, "Cursor is empty. Flop like a fish!");
+            }
+        } catch (CursorIndexOutOfBoundsException e) {
+            Log.e(TAG, "Cursor index doesn't exist. We're not setting this data, " +
+                    "so we might flop somewhere where this is needed!");
+        } finally {
+            cursor.close();
         }
-        cursor.close();
 
         return threadMessage;
     }

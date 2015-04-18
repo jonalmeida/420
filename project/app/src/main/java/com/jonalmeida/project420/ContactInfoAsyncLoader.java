@@ -137,8 +137,7 @@ public class ContactInfoAsyncLoader extends AsyncTask<String, Void, Bitmap> {
                 Uri.encode(phoneNumber));
 
 
-        try( final Cursor cursor = activityContext.
-                getContentResolver().query(
+        try( final Cursor cursor = activityContext.getContentResolver().query(
                     uri, CONTACT_ID_PROJECTION, null, null,
                     ContactsContract.Contacts.DISPLAY_NAME + " ASC") ) {
             ContactItem item = contactItemReference.get();
